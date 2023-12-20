@@ -1,0 +1,29 @@
+@import url('https://free.bboxtype.com/embedfonts/?family=FiraGO:400,500,700');
+
+html, body {
+    height: 100%;
+}
+
+body {
+    font-family: 'FiraGO', sans-serif;
+    background-color: #F3F2FA;
+}
+
+.btn {
+    line-height: 20px;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 8px;
+}
+
+.btn.btn-primary {
+    background-color: #4721DD;
+    border-color: #4721DD;
+}
+
+@media (min-width: 1400px) {
+    .container {
+        max-width: 1288px;
+    }
+}
