@@ -1,13 +1,17 @@
 <template>
     <section class="categories container">
-        <ul class="categories_list d-flex align-items-center justify-content-center gap-4 p-0 mb-0">
+        <ul class="categories_list d-flex align-items-center flex-wrap gap-4 p-0 mb-0">
             <li
-                v-for="(category, index) in 6"
-                :key="index"
+                v-for="category in categories"
+                :key="category.id"
                 class="categories_list__item"
+                :style="`background-color: ${category.background_color};`"
             >
-                <router-link class="categories_list__item-link text-decoration-none" to="/">
-                    index
+                <router-link
+                    class="categories_list__item-link text-decoration-none" to="/"
+                    :style="`color: ${category.text_color}`"
+                >
+                    {{ category.title }}
                 </router-link>
             </li>
         </ul>
@@ -15,8 +19,27 @@
 </template>
 
 <script>
+import Api from "@/requests/Request"
+
+const api = new Api()
 export default {
-    name: "CategoryFilter"
+    name: "CategoryFilter",
+
+    data() {
+        return {
+            categories: []
+        }
+    },
+
+    mounted() {
+        api.getCategories().then(response => {
+            if(response.data) {
+                this.categories = response.data.data
+
+                console.log(this.categories)
+            }
+        })
+    }
 }
 </script>
 
@@ -31,7 +54,6 @@ export default {
         &__item {
             padding: 8px 16px;
             border-radius: 30px;
-            background-color: mediumpurple;
 
             &-link {
                 font-size: 12px;
