@@ -25,6 +25,7 @@ body {
 .form-control {
     border-radius: 12px;
     border-color: #E4E3EB;
+    background-color: #FCFCFD;
     font-size: 14px;
     font-weight: 400;
     line-height: 20px;

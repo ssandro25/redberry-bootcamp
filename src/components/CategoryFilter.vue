@@ -33,10 +33,8 @@ export default {
 
     mounted() {
         api.getCategories().then(response => {
-            if(response.data) {
+            if(response.data.data) {
                 this.categories = response.data.data
-
-                console.log(this.categories)
             }
         })
     }

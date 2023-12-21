@@ -1,8 +1,8 @@
 <template>
     <AuthorizationModal/>
 
-    <header class="container-fluid">
-        <nav class="container d-flex align-items-center justify-content-between">
+    <header class="header container-fluid bg-white">
+        <nav class="navigation container d-flex align-items-center justify-content-between">
             <router-link to="/">
                 <img :src="Logo" title="Redberry" alt="Redberry logo">
             </router-link>
@@ -40,7 +40,12 @@ export default {
 
 
 <style lang="scss">
-nav {
-    padding: 20px 0;
+.header {
+    border-bottom: 1px solid #E4E3EB;
+
+    .navigation {
+        padding: 20px 0;
+    }
 }
+
 </style>
