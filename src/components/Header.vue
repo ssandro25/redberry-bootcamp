@@ -28,7 +28,10 @@ import Logo from "@/assets/images/logo.png"
 import AuthorizationModal from "@/components/AuthorizationModal.vue";
 export default {
     name: "v-header",
-    components: {AuthorizationModal},
+
+    components: {
+        AuthorizationModal
+    },
 
     data() {
         return {

@@ -43,7 +43,7 @@ export default {
             api.getBlogs().then(response => {
                 this.dataTest = response
 
-                console.log(response.data)
+                // console.log(response)
             })
         }
     }

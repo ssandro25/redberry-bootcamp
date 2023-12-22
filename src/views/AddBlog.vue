@@ -109,18 +109,49 @@
 
                 <div class="col-6 mt-4">
                     <div class="d-flex flex-column">
-                        <label for="date" class="label" :color="color">
+                        <label for="date" class="label">
                             კატეგორია *
                         </label>
 
                         <Multiselect
+                            :canClear="false"
+                            :closeOnSelect="false"
+                            wra
                             mode="tags"
                             v-model="categories"
                             :options="options"
-                            groupOptions="options"
-                            class="mt-2"
                             placeholder="აირჩიეთ კატეგორია"
-                        />
+                            class="mt-2"
+                            label="title"
+                        >
+
+                            <template v-slot:tag="{ option, handleTagRemove, disabled }">
+                                <div
+                                    :style="`background-color: ${option.background_color}; color: ${option.text_color}`"
+                                    class="multiselect-tag is-user"
+                                    :class="{ 'is-disabled': disabled }">
+
+                                    {{ option.title }}
+                                    <div
+                                        v-if="!disabled"
+                                        class="multiselect-tag-remove"
+                                        @mousedown.prevent="handleTagRemove(option, $event)"
+                                    >
+                                          <span class="multiselect-tag-remove-icon">
+                                              {{ option.title }}
+                                          </span>
+                                    </div>
+                                </div>
+                            </template>
+
+                            <template v-slot:option="{ option }">
+                                <div
+                                    class="multiselect-option__item"
+                                    :style="`background-color: ${option.background_color}; color: ${option.text_color}`">
+                                    {{ option.title }}
+                                </div>
+                            </template>
+                        </Multiselect>
                     </div>
                 </div>
 
@@ -182,18 +213,25 @@ export default {
             email: null,
             categories: null,
             options: [],
-            color: ''
         }
     },
 
     mounted() {
         api.getCategories().then(response => {
-            if(response.data.data) {
-                this.options = response.data.data.map(option => option.title);
+            if(response.data) {
+                this.options = response.data.data;
 
-                this.color = response.data.data.map(option => option.background_color);
+                this.options = this.options.map((obj) => {
+                    return { ...obj, value: obj.id };
+                });
+
+
+                // console.log(response.data.data, 'response data.data')
+                // console.log(this.options, 'this.options')
             }
         })
+
+        console.log(this.categories)
     }
 }
 </script>
@@ -201,12 +239,6 @@ export default {
 <style src="@vueform/multiselect/themes/default.css"></style>
 
 <style lang="scss">
-
-//:root {
-//    --ms-tag-bg: attr(color);
-//    --ms-tag-color: #D1FAE5;
-//}
-
 .add_blog__title {
     font-size: 32px;
     font-weight: 700;
@@ -247,6 +279,9 @@ export default {
     padding: 6px;
     margin: 0;
     gap: 8px;
+    flex-wrap: nowrap;
+    overflow: hidden;
+    margin-right: 5px;
 }
 
 .multiselect-tag {
@@ -256,10 +291,44 @@ export default {
     font-weight: 500;
     font-size: 12px;
     line-height: 16px;
+    min-width: unset;
 }
 .multiselect-tag-remove {
     padding: 0;
     margin-left: 8px;
+}
+.multiselect-dropdown {
+    border-radius: 12px;
+    border: 1px solid #E4E3EB;
+    box-shadow: 2px 4px 8px 0 rgba(0, 0, 0, 0.08);
+    bottom: -4px;
+    padding: 16px;
+}
+.multiselect-options {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+.multiselect-option {
+    display: inline;
+    padding: 0;
+    background: unset !important;
+}
+.multiselect-option:hover {
+    background: unset !important;
+}
+.multiselect-option__item {
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 16px;
+    padding: 8px 16px;
+    border-radius: 30px;
+}
+.multiselect-caret {
+    mask-image: url("@/assets/images/arrow-down.png");
+    width: 15px;
+    height: 15px;
+    margin-right: 10px;
 }
 .publish_blog__btn {
     margin-top: 40px;

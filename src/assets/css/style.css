@@ -38,6 +38,7 @@ body {
     outline: unset !important;
     box-shadow: unset;
 }
+
 @media (min-width: 1400px) {
     .container {
         max-width: 1288px;
