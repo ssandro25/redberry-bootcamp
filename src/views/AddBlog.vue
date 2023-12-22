@@ -1,4 +1,6 @@
 <template>
+    <SuccessAddedModal/>
+
     <div class="container">
         <div class="container__wrap mx-auto">
             <h1 class="add_blog__title">
@@ -153,18 +155,21 @@
         </div>
     </div>
 
+
 </template>
 
 <script>
 import Multiselect from '@vueform/multiselect'
 
 import Api from "@/requests/Request"
+import SuccessAddedModal from "@/components/SuccessAddedModal.vue";
 
 const api = new Api()
 export default {
     name: "AddBlog",
 
     components: {
+        SuccessAddedModal,
         Multiselect,
     },
 
