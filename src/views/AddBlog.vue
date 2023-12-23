@@ -1,6 +1,6 @@
 <template>
     <SuccessAddedModal/>
-    <div class="container-fluid__add_blog">
+    <div class="container-fluid__add_blog pb-65">
         <div class="container">
             <div class="container__wrap mx-auto">
                 <h1 class="add_blog__title">
@@ -36,15 +36,16 @@
                             </div>
 
                             <div v-else class="added__file d-flex align-items-center justify-content-between p-3 mt-2">
-                                <div class="d-flex align-items-center gap-2">
+                                <div class="d-flex align-items-center gap-2 text-truncate">
                                     <img :src="GalleryIcon" alt="">
 
-                                    <span class="added__file_name">
+                                    <span :title="fileName" class="added__file_name text-truncate">
                                         {{ fileName }}
                                     </span>
                                 </div>
 
                                 <button
+                                    title="ფოტოს წაშლა"
                                     type="button"
                                     class="btn p-0 border-0"
                                     @click="removeChosenFile()"
@@ -55,7 +56,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-6 mt-4">
+                    <div class="col-md-6 mt-4" >
                         <div class="d-flex flex-column">
                             <label for="author" class="label">
                                 ავტორი *
@@ -66,19 +67,33 @@
                                 id="author"
                                 type="text"
                                 class="form-control mt-2"
+                                :class="{
+                                    'valid__input': author.length >= 4 &&  wordCount >= 2 &&  isGeorgianCharacters,
+                                    'not_valid__input' : author.length < 4 && author.length !== 0 || wordCount < 2  && author.length !== 0 || !isGeorgianCharacters && author.length !== 0
+                                }"
                                 placeholder="შეიყვანეთ ავტორი"
+                                @input="validGeorgianCharacters"
                             >
 
                             <ul class="validation d-flex flex-column gap-1 ps-4 mt-2 mb-0">
-                                <li class="validation__property">
+                                <li :class="['validation__property', {
+                                    'is__valid' : author.length >= 4,
+                                    'is_not__valid' : author.length < 4 && author.length !== 0
+                                }]">
                                     მინიმუმ 4 სიმბოლო
                                 </li>
 
-                                <li class="validation__property">
+                                <li :class="['validation__property', {
+                                    'is__valid' : wordCount >= 2,
+                                    'is_not__valid' : wordCount < 2 && author.trim().length !== 0
+                                  }]">
                                     მინიმუმ ორი სიტყვა
                                 </li>
 
-                                <li class="validation__property">
+                                <li :class="['validation__property', {
+                                    'is__valid' : isGeorgianCharacters,
+                                    'is_not__valid' : !isGeorgianCharacters && author.trim().length !== 0
+                                  }]">
                                     მხოლოდ ქართული სიმბოლოები
                                 </li>
                             </ul>
@@ -96,12 +111,19 @@
                                 id="title"
                                 type="text"
                                 class="form-control mt-2"
+                                :class="{
+                                    'valid__input': title.length >= 4,
+                                    'not_valid__input' : title.length < 4 && title.length !== 0
+                                }"
                                 placeholder="შეიყვანეთ სათაური"
                             >
 
-                            <span class="validation__property mt-2">
-                        მინიმუმ 4 სიმბოლო
-                    </span>
+                            <span :class="['validation__property mt-2', {
+                                'is__valid' : title.length >= 4,
+                                 'is_not__valid' : title.length < 4 && title.length !== 0
+                            }]">
+                                მინიმუმ 4 სიმბოლო
+                            </span>
                         </div>
                     </div>
 
@@ -115,13 +137,20 @@
                                 v-model="description"
                                 id="description"
                                 class="form-control mt-2"
+                                :class="{
+                                    'valid__input': description.length >= 4,
+                                    'not_valid__input' : description.length < 4 && description.length !== 0
+                                }"
                                 placeholder="შეიყვანეთ აღწერა"
                                 rows="5"
                             ></textarea>
 
-                            <span class="validation__property mt-2">
-                        მინიმუმ 4 სიმბოლო
-                    </span>
+                            <span :class="['validation__property mt-2', {
+                                'is__valid' : description.length >= 4,
+                                 'is_not__valid' : description.length < 4 && description.length !== 0
+                            }]">
+                                მინიმუმ 4 სიმბოლო
+                            </span>
                         </div>
                     </div>
 
@@ -136,6 +165,9 @@
                                 id="date"
                                 type="date"
                                 class="form-control mt-2"
+                                :class="{
+                                    'valid__input': date,
+                                }"
                                 placeholder="შეიყვანეთ თარიღი "
                             >
                         </div>
@@ -143,7 +175,7 @@
 
                     <div class="col-6 mt-4">
                         <div class="d-flex flex-column">
-                            <label for="date" class="label">
+                            <label class="label">
                                 კატეგორია *
                             </label>
 
@@ -191,7 +223,7 @@
 
                     <div class="col-6 mt-4">
                         <div class="d-flex flex-column">
-                            <label for="date" class="label">
+                            <label for="email" class="label">
                                 ელ-ფოსტა
                             </label>
 
@@ -200,8 +232,28 @@
                                 id="email"
                                 type="email"
                                 class="form-control mt-2"
+                                :class="{
+                                    'valid__input': isEmailValid && email.length !== 0,
+                                    'not_valid__input' : !isEmailValid && email.length !== 0
+                                }"
                                 placeholder="Example@redberry.ge"
+                                @input="validateEmail"
                             >
+
+                            <div
+                                v-if="!isEmailValid"
+                                  class="email_validation__property d-flex align-items-start gap-2 mt-2"
+                                  :class="{
+
+                                    'd-none' : isEmailValid || !email.length
+                                  }"
+                            >
+                                <img :src="InfoIcon" alt="">
+
+                                <span>
+                                    მეილი უნდა მთავრდებოდეს @redberry.ge-ით
+                                </span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -209,6 +261,7 @@
                 <div class="row">
                     <div class="col-6 ms-auto">
                         <button
+                            :disabled="isDisabled"
                             class="btn btn-primary w-100 publish_blog__btn"
                             data-bs-toggle="modal"
                             data-bs-target="#publishBlogModal"
@@ -227,6 +280,7 @@ import Multiselect from '@vueform/multiselect'
 import AddFileIcon from '@/assets/images/folder-add.svg'
 import GalleryIcon from '@/assets/images/gallery-icon.svg'
 import CloseIcon from '@/assets/images/close-icon.svg'
+import InfoIcon from '@/assets/images/info-circle.svg'
 
 import Api from "@/requests/Request"
 import SuccessAddedModal from "@/components/SuccessAddedModal.vue";
@@ -242,18 +296,22 @@ export default {
 
     data() {
         return {
-            author: null,
-            title: null,
-            description: null,
+            author: '',
+            title: '',
+            description: '',
             date: null,
-            email: null,
+            email: '',
             categories: null,
             options: [],
             file: null,
             fileName: null,
+            isGeorgianCharacters: false,
+            isEmailValid: true,
+            isDisabled: true,
             AddFileIcon,
             GalleryIcon,
-            CloseIcon
+            CloseIcon,
+            InfoIcon
         }
     },
 
@@ -273,6 +331,17 @@ export default {
 
         removeChosenFile() {
             this.file = null
+        },
+
+        validGeorgianCharacters() {
+            const georgianRegex = /^[\u10A0-\u10FF\s]+$/;
+
+            this.isGeorgianCharacters = georgianRegex.test(this.author.trim());
+        },
+
+        validateEmail() {
+            const emailRegex = /@redberry\.ge$/;
+            this.isEmailValid = emailRegex.test(this.email);
         }
     },
 
@@ -291,6 +360,13 @@ export default {
         })
 
         console.log(this.file, 'file')
+    },
+
+    computed: {
+        wordCount() {
+            const words = this.author.trim().split(/\s+/);
+            return words.length;
+        },
     }
 }
 </script>
@@ -298,6 +374,19 @@ export default {
 <style src="@vueform/multiselect/themes/default.css"></style>
 
 <style lang="scss">
+.valid__input {
+    border-color: #14D81C !important;
+}
+.not_valid__input {
+    border: 1px solid #EA1919 !important;
+    background: #FAF2F3 !important;
+}
+.is__valid {
+    color: #14D81C !important;
+}
+.is_not__valid {
+    color: #EA1919 !important;
+}
 .container-fluid__add_blog {
     background-color: #FBFAFF;
 }
@@ -350,6 +439,12 @@ export default {
         line-height: 20px;
         color: #85858D;
     }
+}
+.email_validation__property {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 20px;
+    color: #EA1919;
 }
 
 .multiselect {
@@ -424,6 +519,11 @@ export default {
 }
 .publish_blog__btn {
     margin-top: 40px;
+}
+.publish_blog__btn:disabled {
+    background-color: #E4E3EB !important;
+    border-color: #E4E3EB !important;
+    opacity: 1 !important;
 }
 @media (min-width: 1400px) {
     .container__wrap {

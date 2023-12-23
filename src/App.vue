@@ -49,9 +49,3 @@ export default {
     }
 }
 </script>
-
-<style lang="scss">
-main {
-    padding-bottom: 65px;
-}
-</style>

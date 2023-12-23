@@ -38,7 +38,9 @@ body {
     outline: unset !important;
     box-shadow: unset;
 }
-
+.pb-65 {
+    padding-bottom: 65px;
+}
 @media (min-width: 1400px) {
     .container {
         max-width: 1288px;

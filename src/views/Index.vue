@@ -1,5 +1,5 @@
 <template>
-    <div class="container-fluid">
+    <div class="container-fluid pb-65">
         <IntroCover />
 
         <CategoryFilter />
