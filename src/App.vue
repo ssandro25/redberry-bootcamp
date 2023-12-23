@@ -17,21 +17,21 @@ import Api from "@/requests/Request"
 const api = new Api()
 
 export default {
-   components: {
-       Header
-   },
+    components: {
+        Header
+    },
 
     data() {
-      return {
-          dataTest: null
-      }
+        return {
+            dataTest: null
+        }
     },
-    mounted(){
-        axios.defaults.baseURL='https://api.blog.redberryinternship.ge/api/'
+    mounted() {
+        axios.defaults.baseURL = 'https://api.blog.redberryinternship.ge/api/'
 
         this.baseToken()
 
-       this.checkToken()
+        this.checkToken()
     },
 
     methods: {
