@@ -68,8 +68,8 @@
                                 type="text"
                                 class="form-control mt-2"
                                 :class="{
-                                    'valid__input': author.length >= 4 &&  wordCount >= 2 &&  isGeorgianCharacters,
-                                    'not_valid__input' : author.length < 4 && author.length !== 0 || wordCount < 2  && author.length !== 0 || !isGeorgianCharacters && author.length !== 0
+                                    'valid__input': getNonSpaceLength(author) >= 4 &&  wordCount >= 2 &&  isGeorgianCharacters,
+                                    'not_valid__input' :getNonSpaceLength(author) < 4 && author.trim().length !== 0 || wordCount < 2  && author.length !== 0 || !isGeorgianCharacters && author.length !== 0
                                 }"
                                 placeholder="შეიყვანეთ ავტორი"
                                 @input="validGeorgianCharacters"
@@ -77,8 +77,8 @@
 
                             <ul class="validation d-flex flex-column gap-1 ps-4 mt-2 mb-0">
                                 <li :class="['validation__property', {
-                                    'is__valid' : author.length >= 4,
-                                    'is_not__valid' : author.length < 4 && author.length !== 0
+                                    'is__valid' : getNonSpaceLength(author) >= 4,
+                                    'is_not__valid' : getNonSpaceLength(author) < 4 && author.trim().length !== 0
                                 }]">
                                     მინიმუმ 4 სიმბოლო
                                 </li>
@@ -112,17 +112,18 @@
                                 type="text"
                                 class="form-control mt-2"
                                 :class="{
-                                    'valid__input': title.length >= 4,
-                                    'not_valid__input' : title.length < 4 && title.length !== 0
+                                    'valid__input': getNonSpaceLength(title) >= 4,
+                                    'not_valid__input' : getNonSpaceLength(title) < 4 && title.trim().length !== 0
                                 }"
                                 placeholder="შეიყვანეთ სათაური"
+                                @input="validateTitle"
                             >
 
                             <span :class="['validation__property mt-2', {
-                                'is__valid' : title.length >= 4,
-                                 'is_not__valid' : title.length < 4 && title.length !== 0
-                            }]">
-                                მინიმუმ 4 სიმბოლო
+                                  'is__valid' : getNonSpaceLength(title) >= 4,
+                                  'is_not__valid' : getNonSpaceLength(title) < 4 && title.trim().length !== 0
+                                }]">
+                                  მინიმუმ 4 სიმბოლო
                             </span>
                         </div>
                     </div>
@@ -138,16 +139,16 @@
                                 id="description"
                                 class="form-control mt-2"
                                 :class="{
-                                    'valid__input': description.length >= 4,
-                                    'not_valid__input' : description.length < 4 && description.length !== 0
+                                    'valid__input': getNonSpaceLength(description) >= 4,
+                                    'not_valid__input' : getNonSpaceLength(description) < 4 && description.trim().length !== 0
                                 }"
                                 placeholder="შეიყვანეთ აღწერა"
                                 rows="5"
                             ></textarea>
 
                             <span :class="['validation__property mt-2', {
-                                'is__valid' : description.length >= 4,
-                                 'is_not__valid' : description.length < 4 && description.length !== 0
+                                'is__valid' : getNonSpaceLength(description) >= 4,
+                                'is_not__valid' : getNonSpaceLength(description) < 4 && description.trim().length !== 0
                             }]">
                                 მინიმუმ 4 სიმბოლო
                             </span>
@@ -180,6 +181,7 @@
                             </label>
 
                             <Multiselect
+                                @change="selectCategory"
                                 :canClear="false"
                                 :closeOnSelect="false"
                                 wra
@@ -188,6 +190,7 @@
                                 :options="options"
                                 placeholder="აირჩიეთ კატეგორია"
                                 class="mt-2"
+                                :class="{ 'valid__input': categories.length > 0 }"
                                 label="title"
                             >
 
@@ -244,7 +247,6 @@
                                 v-if="!isEmailValid"
                                   class="email_validation__property d-flex align-items-start gap-2 mt-2"
                                   :class="{
-
                                     'd-none' : isEmailValid || !email.length
                                   }"
                             >
@@ -261,7 +263,7 @@
                 <div class="row">
                     <div class="col-6 ms-auto">
                         <button
-                            :disabled="isDisabled"
+                            :disabled="!isDisabled"
                             class="btn btn-primary w-100 publish_blog__btn"
                             data-bs-toggle="modal"
                             data-bs-target="#publishBlogModal"
@@ -301,13 +303,12 @@ export default {
             description: '',
             date: null,
             email: '',
-            categories: null,
+            categories: [],
             options: [],
             file: null,
             fileName: null,
             isGeorgianCharacters: false,
             isEmailValid: true,
-            isDisabled: true,
             AddFileIcon,
             GalleryIcon,
             CloseIcon,
@@ -342,6 +343,21 @@ export default {
         validateEmail() {
             const emailRegex = /@redberry\.ge$/;
             this.isEmailValid = emailRegex.test(this.email);
+        },
+
+        validateTitle() {
+            this.$emit('input', this.title.trim());
+        },
+
+        getNonSpaceLength(str) {
+            return str.replace(/\s/g, '').length;
+        },
+
+        selectCategory(selectedIndexes) {
+            const selectedOptions = selectedIndexes.map(index => this.options[index].title);
+            this.categories = selectedIndexes;
+            console.log('Выбранные опции:', selectedOptions);
+            console.log('this.categories:', this.categories);
         }
     },
 
@@ -367,6 +383,17 @@ export default {
             const words = this.author.trim().split(/\s+/);
             return words.length;
         },
+
+        isDisabled() {
+            return this.getNonSpaceLength(this.author) >= 4
+                && this.wordCount >= 2
+                && this.isGeorgianCharacters
+                && this.getNonSpaceLength(this.title) >= 4
+                && this.getNonSpaceLength(this.description) >= 4
+                && this.date
+                && this.categories.length > 0
+                && (this.isEmailValid || this.email === '')
+        }
     }
 }
 </script>
@@ -432,6 +459,13 @@ export default {
     line-height: 20px;
 }
 
+.multiselect-placeholder,
+input::placeholder {
+    color: #85858D !important;
+    font-size: 14px !important;
+    font-weight: 400 !important;
+    line-height: 20px !important;
+}
 .validation {
     &__property {
         font-weight: 400;
