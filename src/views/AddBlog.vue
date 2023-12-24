@@ -185,8 +185,10 @@
 
                             <Multiselect
                                 @change="selectCategory"
+                                :hideSelected="false"
                                 :canClear="false"
                                 :closeOnSelect="false"
+                                noResultsText="ცარიელია."
                                 wra
                                 mode="tags"
                                 v-model="categories"
@@ -268,8 +270,7 @@
                         <button
                             :disabled="!isDisabled"
                             class="btn btn-primary w-100 publish_blog__btn"
-                            data-bs-toggle="modal"
-                            data-bs-target="#publishBlogModal"
+                            @click="postBlog()"
                         >
                             გამოქვეყნება
                         </button>
@@ -355,11 +356,28 @@ export default {
             return str.replace(/\s/g, '').length;
         },
 
+        // selectCategory(selectedIndexes) {
+        //     const selectedOptions = selectedIndexes.map(index => this.options[index].title);
+        //     this.categories = selectedIndexes;
+        //     console.log('Выбранные опции:', selectedOptions);
+        //     console.log('this.categories:', JSON.stringify(this.categories));
+        // }
+
         selectCategory(selectedIndexes) {
-            const selectedOptions = selectedIndexes.map(index => this.options[index].title);
-            this.categories = selectedIndexes;
-            console.log('Выбранные опции:', selectedOptions);
-            console.log('this.categories:', this.categories);
+            if (selectedIndexes.length > 0 && this.options.length > 0) {
+                const selectedOptions = selectedIndexes
+                    .filter(index => index >= 0 && index < this.options.length)
+                    .map(index => this.options[index]?.title);
+
+                this.categories = selectedIndexes;
+                console.log('Выбранные опции:', selectedOptions);
+            }
+        },
+
+        postBlog() {
+            api.postBlog(this.title, this.description, this.file, this.author, this.date, JSON.stringify(this.categories), this.email).then(response => {
+                console.log(response)
+            })
         }
     },
 
@@ -377,7 +395,7 @@ export default {
             }
         })
 
-        console.log(this.file, 'file')
+
     },
 
     computed: {

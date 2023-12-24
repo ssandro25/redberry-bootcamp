@@ -12,4 +12,22 @@ export default class Api {
     login(email) {
         return axios.post('login', {email})
     }
+
+    postBlog(title, description, image, author, publish_date, categories, email) {
+        let formData = new FormData()
+
+        formData.append('title', title)
+        formData.append('description', description)
+        formData.append('image', image)
+        formData.append('author', author)
+        formData.append('publish_date', publish_date)
+        formData.append('categories', categories)
+        formData.append('email', email)
+
+        return axios.post('blogs', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
+    }
 }

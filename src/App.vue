@@ -11,6 +11,9 @@
 import Header from "@/components/Header.vue";
 import axios from 'axios';
 
+// import Api from "@/requests/Request"
+// const api = new Api()
+
 export default {
     components: {
         Header
@@ -20,6 +23,10 @@ export default {
         axios.defaults.baseURL = 'https://api.blog.redberryinternship.ge/api/'
 
         this.baseToken()
+
+        // api.getBlogs().then(response => {
+        //     console.log(response.data)
+        // })
     },
 
     methods: {
