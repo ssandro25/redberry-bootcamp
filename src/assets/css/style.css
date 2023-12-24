@@ -41,6 +41,9 @@ body {
 .pb-65 {
     padding-bottom: 65px;
 }
+.cursor-pointer {
+    cursor: pointer;
+}
 @media (min-width: 1400px) {
     .container {
         max-width: 1288px;

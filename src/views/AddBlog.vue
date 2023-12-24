@@ -14,14 +14,17 @@
                                 ატვირთეთ ფოტო
                             </label>
 
-                            <div v-if="!file" class="add__file__container text-center p-5 mt-2">
+                            <div
+                                v-if="!file"
+                                class="add__file__container text-center p-5 mt-2"
+                                @click="chooseFile()"
+                            >
                                 <img :src="AddFileIcon" alt="Add file icon">
 
                                 <p class="add__file__container--label mt-4 mb-0">
                                     ჩააგდეთ ფაილი აქ ან
                                     <span
-                                        class="text-decoration-underline"
-                                        @click="chooseFile()"
+                                        class="text-decoration-underline cursor-pointer"
                                     >
                                         აირჩიეთ ფაილი
                                     </span>
@@ -283,9 +286,8 @@ import AddFileIcon from '@/assets/images/folder-add.svg'
 import GalleryIcon from '@/assets/images/gallery-icon.svg'
 import CloseIcon from '@/assets/images/close-icon.svg'
 import InfoIcon from '@/assets/images/info-circle.svg'
-
-import Api from "@/requests/Request"
 import SuccessAddedModal from "@/components/SuccessAddedModal.vue";
+import Api from "@/requests/Request"
 
 const api = new Api()
 export default {
