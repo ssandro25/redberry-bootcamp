@@ -1,5 +1,6 @@
 <template>
-    <SuccessAddedModal/>
+    <SuccessAdded v-if="addedSuccess" />
+
     <div class="container-fluid__add_blog pb-65">
         <div class="container">
             <div class="container__wrap mx-auto">
@@ -287,7 +288,7 @@ import AddFileIcon from '@/assets/images/folder-add.svg'
 import GalleryIcon from '@/assets/images/gallery-icon.svg'
 import CloseIcon from '@/assets/images/close-icon.svg'
 import InfoIcon from '@/assets/images/info-circle.svg'
-import SuccessAddedModal from "@/components/SuccessAddedModal.vue";
+import SuccessAdded from "@/components/SuccessAdded.vue";
 import Api from "@/requests/Request"
 
 const api = new Api()
@@ -295,7 +296,7 @@ export default {
     name: "AddBlog",
 
     components: {
-        SuccessAddedModal,
+        SuccessAdded,
         Multiselect,
     },
 
@@ -312,6 +313,7 @@ export default {
             fileName: null,
             isGeorgianCharacters: false,
             isEmailValid: true,
+            addedSuccess: false,
             AddFileIcon,
             GalleryIcon,
             CloseIcon,
@@ -356,27 +358,17 @@ export default {
             return str.replace(/\s/g, '').length;
         },
 
-        // selectCategory(selectedIndexes) {
-        //     const selectedOptions = selectedIndexes.map(index => this.options[index].title);
-        //     this.categories = selectedIndexes;
-        //     console.log('Выбранные опции:', selectedOptions);
-        //     console.log('this.categories:', JSON.stringify(this.categories));
-        // }
-
         selectCategory(selectedIndexes) {
             if (selectedIndexes.length > 0 && this.options.length > 0) {
-                const selectedOptions = selectedIndexes
-                    .filter(index => index >= 0 && index < this.options.length)
-                    .map(index => this.options[index]?.title);
+                selectedIndexes.filter(index => index >= 0 && index < this.options.length).map(index => this.options[index]?.title);
 
                 this.categories = selectedIndexes;
-                console.log('Выбранные опции:', selectedOptions);
             }
         },
 
         postBlog() {
-            api.postBlog(this.title, this.description, this.file, this.author, this.date, JSON.stringify(this.categories), this.email).then(response => {
-                console.log(response)
+            api.postBlog(this.title, this.description, this.file, this.author, this.date, JSON.stringify(this.categories), this.email).then(() => {
+                this.addedSuccess = true
             })
         }
     },
@@ -405,7 +397,8 @@ export default {
         },
 
         isDisabled() {
-            return this.getNonSpaceLength(this.author) >= 4
+            return this.file
+                && this.getNonSpaceLength(this.author) >= 4
                 && this.wordCount >= 2
                 && this.isGeorgianCharacters
                 && this.getNonSpaceLength(this.title) >= 4

@@ -26,7 +26,7 @@
                 {{ blog.title }}
             </div>
 
-            <ul class="blog_item_categories__list d-flex align-items-center gap-3 p-0 mt-3 mb-0">
+            <ul class="blog_item_categories__list d-flex flex-wrap align-items-center gap-3 p-0 mt-3 mb-0">
                 <li
                     v-for="category in blog.categories"
                     :key="category.id"
