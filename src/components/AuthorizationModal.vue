@@ -2,12 +2,18 @@
     <div class="modal fade" id="authorizationModal" tabindex="-1" aria-labelledby="authorizationModalLabel"
          aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header border-0">
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal-content border-0">
+                <div class="modal-header border-0 p-0">
+                    <button
+                        type="button"
+                        class="btn p-0 border-0"
+                        data-bs-dismiss="modal"
+                        aria-label="Close">
+                        <img :src="CloseIcon" alt="">
+                    </button>
                 </div>
 
-                <div class="modal-body pt-0">
+                <div class="modal-body">
                     <div v-if="!authorized">
                         <p class="modal__title text-center mb-0">
                             შესვლა
@@ -29,10 +35,11 @@
                                 id="email"
                             >
 
-                            <p
-                                v-if="!emailCheckMessage"
-                                class="email_not_found__text mt-2 mb-0">
-                                <img :src="InfoIcon" alt=""> ელ-ფოსტა არ მოიძებნა
+                            <p class="email_not_found__text mt-2 mb-0">
+                                <span  v-if="!emailCheckMessage">
+                                     <img :src="InfoIcon" alt=""> ელ-ფოსტა არ მოიძებნა
+                                </span>
+
                             </p>
                         </div>
 
@@ -69,6 +76,7 @@
 </template>
 
 <script>
+import CloseIcon from '@/assets/images/close.svg'
 import SuccessCheckIcon from '@/assets/images/tick-circle.svg'
 import InfoIcon from '@/assets/images/info-circle.svg'
 import Api from "@/requests/Request"
@@ -83,7 +91,8 @@ export default {
             authorized: false,
             emailCheckMessage: true,
             SuccessCheckIcon,
-            InfoIcon
+            InfoIcon,
+            CloseIcon
         }
     },
 
@@ -110,7 +119,7 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 .modal__title {
     font-weight: 700;
     font-size: 32px;
@@ -134,11 +143,30 @@ export default {
     font-weight: 400;
     font-size: 12px;
     line-height: 20px;
+    height: 21px;
     color: #EA1919;
 }
 
 .email_not_found__input {
     border: 1px solid #EA1919 !important;
     background: #FAF2F3 !important;
+}
+
+.modal-header {
+    position: absolute;
+    z-index: 1;
+    top: 20px;
+    right: 20px;
+}
+
+.modal-body {
+    padding: 64px 24px 40px !important;
+}
+.modal-backdrop {
+    background-color: rgba(26, 26, 31, 1) !important;
+    opacity: 0.24 !important;
+}
+.modal-content {
+    border-radius: 12px !important;
 }
 </style>
