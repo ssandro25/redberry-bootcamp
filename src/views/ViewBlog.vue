@@ -114,56 +114,61 @@ export default {
 
 
 <style scoped lang="scss">
-.blog__page__container_wrap {
-    max-width: 720px;
-    margin-top: 40px;
+.blog__page {
+    padding-bottom: 65px;
 
-    .blog {
-        &__image img{
-            height: 328px;
-            object-fit: cover;
-            border-radius: 12px;
-        }
+    &__container_wrap {
+        max-width: 720px;
+        margin-top: 40px;
 
-        &__author {
-            color: #1A1A1F;
-            font-size: 16px;
-            font-weight: 500;
-            line-height: 20px;
-            margin-top: 40px;
-        }
+        .blog {
+            &__image img{
+                height: 328px;
+                object-fit: cover;
+                border-radius: 12px;
+            }
 
-        &__date, &__email {
-            color: #85858D;
-            font-size: 12px;
-            font-weight: 400;
-            line-height: 16px;
-        }
+            &__author {
+                color: #1A1A1F;
+                font-size: 16px;
+                font-weight: 500;
+                line-height: 20px;
+                margin-top: 40px;
+            }
 
-        &__title {
-            color: #1A1A1F;
-            font-size: 32px;
-            font-weight: 700;
-            line-height: 40px;
-        }
-
-        &__categories {
-            list-style: none;
-            &--item {
-                border-radius: 30px;
-                padding: 6px 10px;
+            &__date, &__email {
+                color: #85858D;
                 font-size: 12px;
+                font-weight: 400;
                 line-height: 16px;
             }
-        }
 
-        &__description {
-            color: #404049;
-            font-size: 16px;
-            font-weight: 400;
-            line-height: 28px;
-            margin-top: 40px;
+            &__title {
+                color: #1A1A1F;
+                font-size: 32px;
+                font-weight: 700;
+                line-height: 40px;
+            }
+
+            &__categories {
+                list-style: none;
+                &--item {
+                    border-radius: 30px;
+                    padding: 6px 10px;
+                    font-size: 12px;
+                    line-height: 16px;
+                }
+            }
+
+            &__description {
+                color: #404049;
+                font-size: 16px;
+                font-weight: 400;
+                line-height: 28px;
+                margin-top: 40px;
+            }
         }
     }
 }
+
 </style>

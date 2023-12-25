@@ -4,14 +4,19 @@
             მსგავსი სტატიები
         </h2>
 
+        <p v-if="!filteredBlogs.length" class="not_found__text mb-0">
+            მსგავსი სტატიები არ მოიძებნა...
+        </p>
+
         <swiper
+            v-else
             :slides-per-view="3"
             :space-between="50"
             @swiper="onSwiper"
             @slideChange="onSlideChange"
         >
             <swiper-slide
-                v-for="blog in similarBlogs"
+                v-for="blog in filteredBlogs"
                 :key="blog.id"
                 :id="blog.id">
                 <div>
@@ -100,7 +105,22 @@ export default {
         formatDate(date) {
             return moment(date).format('DD.MM.YYYY');
         },
-    }
+    },
+
+    computed: {
+        filteredBlogs() {
+            const today = moment();
+
+            console.log(today._d)
+
+
+            return this.similarBlogs.filter(blog => {
+                const showBlogDate = moment(blog.publish_date);
+
+                return showBlogDate.isSameOrBefore(today, 'day');
+            });
+        },
+    },
 }
 </script>
 
@@ -113,6 +133,10 @@ export default {
     font-size: 32px;
     font-weight: 700;
     line-height: 40px;
+}
+.not_found__text {
+    color: #404049;
+    font-size: 18px;
 }
 .blog_item {
     &__pic img {

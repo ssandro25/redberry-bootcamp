@@ -1,42 +1,61 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
+import {createRouter, createWebHashHistory} from 'vue-router'
 import Index from '@/views/Index.vue'
 import AddBlog from "@/views/AddBlog.vue";
 import ViewBlog from "@/views/ViewBlog.vue";
 
 const routes = [
-  {
-    path: '/',
-    name: 'home',
-    component: Index
-  },
+    {
+        path: '/',
+        name: 'home',
+        component: Index,
+        meta: {
+            title: 'რედბერი - მთავარი გვერდი'
+        }
+    },
 
-  {
-    path: '/add-blog',
-    name: 'add-blog',
-    component: AddBlog
-  },
+    {
+        path: '/add-blog',
+        name: 'add-blog',
+        component: AddBlog,
+        meta: {
+            title: 'ბლოგის დამატება',
+            required: true
+        }
+    },
 
-  {
-    path: '/blogs/:id',
-    name: 'blog',
-    component: ViewBlog
-  },
-  // {
-  //   path: '/about',
-  //   name: 'about',
-  //   // route level code-splitting
-  //   // this generates a separate chunk (about.[hash].js) for this route
-  //   // which is lazy-loaded when the route is visited.
-  //   component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
-  // }
+    {
+        path: '/blogs/:id',
+        name: 'blog',
+        component: ViewBlog,
+        meta: {
+            title: 'ბლოგის გვერდი'
+        }
+    },
 ]
 
 const router = createRouter({
-  history: createWebHashHistory(),
-  scrollBehavior() {
-    return { top: 0 };
-  },
-  routes
+    history: createWebHashHistory(),
+
+    scrollBehavior() {
+        return {top: 0};
+    },
+
+    routes
+})
+
+router.beforeEach((to, from, next) => {
+    document.title = to.meta.title
+
+    if (to.meta.required) {
+        if (localStorage.getItem('authorized')) {
+            next()
+        } else {
+            alert('გაიარეთ ავტორიზაცია')
+            next('/')
+        }
+    } else {
+        next()
+    }
 })
 
 export default router

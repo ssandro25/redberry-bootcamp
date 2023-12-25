@@ -1,10 +1,10 @@
 <template>
     <section class="categories container">
-        <ul class="categories_list d-flex align-items-center flex-wrap gap-4 p-0 mb-0">
+        <ul class="categories_list d-flex align-items-center gap-4 p-0 mb-0">
             <li
                 v-for="category in categories"
                 :key="category.id"
-                class="categories_list__item"
+                class="categories_list__item text-nowrap"
                 :style="`background-color: ${category.background_color};`"
             >
                 <router-link
@@ -47,6 +47,7 @@ export default {
     margin-top: 64px;
 
     &_list {
+        overflow-x: auto;
         list-style: none;
 
         &__item {
