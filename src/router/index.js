@@ -1,6 +1,7 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import Index from '@/views/Index.vue'
 import AddBlog from "@/views/AddBlog.vue";
+import ViewBlog from "@/views/ViewBlog.vue";
 
 const routes = [
   {
@@ -8,10 +9,17 @@ const routes = [
     name: 'home',
     component: Index
   },
+
   {
     path: '/add-blog',
     name: 'add-blog',
     component: AddBlog
+  },
+
+  {
+    path: '/blogs/:id',
+    name: 'blog',
+    component: ViewBlog
   },
   // {
   //   path: '/about',

@@ -9,6 +9,10 @@ export default class Api {
         return axios.get('blogs')
     }
 
+    viewBlog(id) {
+        return axios.get('blogs/' + id)
+    }
+
     login(email) {
         return axios.post('login', {email})
     }

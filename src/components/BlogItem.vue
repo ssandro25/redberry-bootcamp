@@ -1,44 +1,49 @@
 <template>
     <div
-        v-for="(blog, index) in 6"
-        :key="index"
+        v-for="blog in blogs"
+        :key="blog.id"
         class="col"
+        :id="blog.id"
     >
         <div class="blog_item">
             <div class="blog_item__pic">
                 <img
-                    src="@/assets/images/blog-pic.png"
+                    :src="blog.image"
                     class="w-100"
-                    alt="">
+                    alt=""
+                >
             </div>
 
             <p class="blog_item__author mt-4 mb-0">
-                ლილე კვარაცხელია
+                {{ blog.author }}
             </p>
 
             <span class="blog_item__date d-block mt-2">
                 02.11.2023
+                {{ blog.publish_date }}
             </span>
 
             <div class="blog_item__title mt-3 mb-0">
-                მობილური ფოტოგრაფიის კონკურსის გამარჯვებულთა ვინაობა ცნობილია. მობილური ფოტოგრაფიის კონკურსის გამარჯვებულთა
+                {{ blog.title }}
             </div>
 
             <ul class="blog_item_categories__list d-flex align-items-center gap-3 p-0 mt-3 mb-0">
                 <li
-                    v-for="(category, index) in 3"
-                    :key="index"
-                    class="blog_item_categories__list--item">
-                    Figma
+                    v-for="category in blog.categories"
+                    :key="category.id"
+                    class="blog_item_categories__list--item"
+                    :style="`background-color: ${category.background_color}; color: ${category.text_color}`"
+                >
+                    {{ category.title }}
                 </li>
             </ul>
 
             <p class="blog_item__description mt-2 mb-0">
-                6 თვის შემდეგ ყველის ბრმა დეგუსტაციის დროც დადგა. მაქსიმალური სიზუსტისთვის. 6 თვის შემდეგ ყველის ბრმა დეგუსტაციის დროც დადგა. მაქსიმალური სიზუსტისთვის. 6 თვის შემდეგ ყველის ბრმა დეგუსტაციის დროც დადგა. მაქსიმალური სიზუსტისთვის
+                {{ blog.description }}
             </p>
 
             <router-link
-                to="/"
+                :to="/blogs/+blog.id"
                 class="view_blog__link d-block text-decoration-none mt-3"
             >
                 სრულიად ნახვა
@@ -53,11 +58,15 @@ import ArrowIcon from "@/assets/images/arrow-icon.svg"
 export default {
     name: "BlogItem",
 
+    props: {
+        blogs: Array
+    },
+
     data() {
         return {
             ArrowIcon
         }
-    }
+    },
 }
 </script>
 
@@ -66,6 +75,8 @@ export default {
 .blog_item {
     &__pic img {
         border-radius: 12px;
+        height: 328px;
+        object-fit: cover;
     }
 
     &__author {
@@ -88,6 +99,7 @@ export default {
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
         overflow: hidden;
+        height: 56px;
     }
 
     &_categories__list {
@@ -97,8 +109,6 @@ export default {
             padding: 6px 10px;
             font-size: 12px;
             line-height: 16px;
-            background-color: #08D2AE14;
-            color: #1AC7A8;
         }
     }
 

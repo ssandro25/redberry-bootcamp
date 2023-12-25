@@ -167,7 +167,7 @@
                             <input
                                 v-model="date"
                                 id="date"
-                                type="date"
+                                type="datetime-local"
                                 class="form-control mt-2"
                                 :class="{
                                     'valid__input': date,
