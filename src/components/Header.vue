@@ -1,8 +1,11 @@
 <template>
     <AuthorizationModal/>
 
-    <header class="header container-fluid bg-white">
-        <nav class="navigation container d-flex align-items-center justify-content-between">
+    <header class="header container-fluid bg-white sticky-top">
+        <nav :class="['navigation container d-flex align-items-center', {
+            'justify-content-center' : $route.name === 'add-blog',
+            'justify-content-between' : $route.name !== 'add-blog'
+        }]">
             <router-link to="/">
                 <img :src="Logo" title="Redberry" alt="Redberry logo">
             </router-link>
@@ -17,7 +20,7 @@
             </button>
 
             <router-link
-                v-else
+                v-if="authorized && $route.name !== 'add-blog'"
                 :to="{ name: 'add-blog' }"
                 class="btn btn-primary">
                 დაამატე ბლოგი
