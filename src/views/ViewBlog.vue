@@ -48,20 +48,29 @@
                  </p>
              </div>
         </div>
+
+        <SimilarBlogs :similar-blogs="similarBlogs"/>
+
     </div>
 </template>
 
 <script>
 import moment from 'moment';
 import Api from "@/requests/Request"
+import SimilarBlogs from "@/components/SimilarBlogs.vue";
 
 const api = new Api()
 export default {
     name: "ViewBlog",
 
+    components: {
+        SimilarBlogs
+    },
+
     data() {
         return {
-            currentBlog: []
+            currentBlog: [],
+            similarBlogs: []
         }
     },
 
@@ -69,14 +78,36 @@ export default {
         formatDate(date) {
             return moment(date).format('DD.MM.YYYY');
         },
+
+        viewBlog(id) {
+            api.viewBlog(id).then(response => {
+                this.currentBlog = response.data
+            })
+        }
+    },
+
+    watch: {
+        '$route'(e) {
+            this.viewBlog(e.params.id)
+        }
     },
 
     mounted() {
-        api.viewBlog(this.$route.params.id).then(response => {
-            this.currentBlog = response.data
+        // api.viewBlog(this.$route.params.id).then(response => {
+        //     this.currentBlog = response.data
+        // })
 
-            console.log(this.currentBlog)
-        })
+        this.viewBlog(this.$route.params.id)
+
+        api.getBlogs().then(response => {
+            this.similarBlogs = response.data.data.filter(blog => {
+                return blog.categories.some(category => {
+                    return this.currentBlog.categories.some(
+                        currentCategory => currentCategory.title === category.title
+                    );
+                });
+            });
+        });
     }
 }
 </script>
