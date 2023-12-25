@@ -17,8 +17,7 @@
 
                             <div
                                 v-if="!file"
-                                class="add__file__container text-center p-5 mt-2"
-                                @click="chooseFile()"
+                                class="add__file__container text-center p-5 mt-2 position-relative"
                             >
                                 <img :src="AddFileIcon" alt="Add file icon">
 
@@ -34,7 +33,7 @@
                                 <input
                                     @change="addFile"
                                     id="choose__file_input"
-                                    class="d-none"
+                                    class="opacity-0 choose__file_input position-absolute"
                                     type="file"
                                 >
                             </div>
@@ -322,9 +321,9 @@ export default {
     },
 
     methods: {
-        chooseFile() {
-            document.querySelector('#choose__file_input').click()
-        },
+        // chooseFile() {
+        //     document.querySelector('#choose__file_input').click()
+        // },
 
         addFile(event){
             this.file = event.target.files;
@@ -456,6 +455,13 @@ export default {
         span {
             font-weight: 500;
         }
+    }
+
+    .choose__file_input {
+        width: 600px;
+        height: 182px;
+        top: 0;
+        left: 0;
     }
 }
 
