@@ -8,7 +8,30 @@ body {
     font-family: 'FiraGO', sans-serif;
     background-color: #F3F2FA;
 }
+/* ===== Scrollbar CSS ===== */
+/* Firefox */
+* {
+    scrollbar-width: auto;
+    scrollbar-color: #5d37f3 #ffffff;
+}
 
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+    width: 16px;
+}
+
+*::-webkit-scrollbar-track {
+    background: #ffffff;
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: #5d37f3;
+    border-radius: 10px;
+    border: 3px solid #ffffff;
+}
+*::-webkit-scrollbar-thumb:hover {
+    background-color: #4b2aa3 ;
+}
 .btn {
     line-height: 20px;
     padding: 10px 20px;
@@ -18,8 +41,8 @@ body {
 }
 
 .btn.btn-primary {
-    background-color: #4721DD;
-    border-color: #4721DD;
+    background-color: #5D37F3;
+    border-color: #5D37F3;
 }
 
 .form-control {
