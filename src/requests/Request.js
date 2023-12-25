@@ -19,7 +19,7 @@ export default class Api {
         formData.append('title', title)
         formData.append('description', description)
         for(let file of image){
-            formData.append('image[]', file)
+            formData.append('image', file)
 
 
         }

@@ -11,8 +11,8 @@
 import Header from "@/components/Header.vue";
 import axios from 'axios';
 
-// import Api from "@/requests/Request"
-// const api = new Api()
+import Api from "@/requests/Request"
+const api = new Api()
 
 export default {
     components: {
@@ -24,9 +24,9 @@ export default {
 
         this.baseToken()
 
-        // api.getBlogs().then(response => {
-        //     console.log(response.data)
-        // })
+        api.getBlogs().then(response => {
+            console.log(response.data)
+        })
     },
 
     methods: {
