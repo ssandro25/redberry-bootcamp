@@ -16,7 +16,7 @@
 
                  <p class="d-flex align-items-center gap-2 mt-2 mb-0">
                     <span class="blog__date">
-                        {{ currentBlog.publish_date }}
+                        {{ formatDate(currentBlog.publish_date ) }}
                     </span>
 
                      <span v-if="currentBlog.email" class="blog__email fw-bold">
@@ -52,6 +52,7 @@
 </template>
 
 <script>
+import moment from 'moment';
 import Api from "@/requests/Request"
 
 const api = new Api()
@@ -62,6 +63,12 @@ export default {
         return {
             currentBlog: []
         }
+    },
+
+    methods: {
+        formatDate(date) {
+            return moment(date).format('DD.MM.YYYY');
+        },
     },
 
     mounted() {

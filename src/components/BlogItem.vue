@@ -1,6 +1,6 @@
 <template>
     <div
-        v-for="blog in blogs"
+        v-for="blog in filteredBlogs"
         :key="blog.id"
         class="col"
         :id="blog.id"
@@ -19,8 +19,7 @@
             </p>
 
             <span class="blog_item__date d-block mt-2">
-                02.11.2023
-                {{ blog.publish_date }}
+                {{ formatDate(blog.publish_date ) }}
             </span>
 
             <div class="blog_item__title mt-3 mb-0">
@@ -55,6 +54,8 @@
 
 <script>
 import ArrowIcon from "@/assets/images/arrow-icon.svg"
+import moment from 'moment';
+
 export default {
     name: "BlogItem",
 
@@ -66,6 +67,27 @@ export default {
         return {
             ArrowIcon
         }
+    },
+
+    methods: {
+        formatDate(date) {
+            return moment(date).format('DD.MM.YYYY');
+        },
+    },
+
+    computed: {
+        filteredBlogs() {
+            const today = moment();
+
+            console.log(today._d)
+
+
+            return this.blogs.filter(blog => {
+                const showBlogDate = moment(blog.publish_date);
+
+                return showBlogDate.isSameOrBefore(today, 'day');
+            });
+        },
     },
 }
 </script>
