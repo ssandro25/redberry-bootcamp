@@ -3,6 +3,14 @@
 
     <div class="container-fluid__add_blog pb-65">
         <div class="container">
+
+            <router-link
+                to="/"
+                class="home__btn_arrow d-flex align-items-center justify-content-center rounded-circle position-fixed"
+            >
+                <img :src="ArrowIcon" alt="">
+            </router-link>
+
             <div class="container__wrap mx-auto">
                 <h1 class="add_blog__title">
                     ბლოგის დამატება
@@ -282,6 +290,7 @@
 </template>
 
 <script>
+import ArrowIcon from "@/assets/images/arrow.svg"
 import Multiselect from '@vueform/multiselect'
 import AddFileIcon from '@/assets/images/folder-add.svg'
 import GalleryIcon from '@/assets/images/gallery-icon.svg'
@@ -316,7 +325,8 @@ export default {
             AddFileIcon,
             GalleryIcon,
             CloseIcon,
-            InfoIcon
+            InfoIcon,
+            ArrowIcon
         }
     },
 

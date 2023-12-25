@@ -61,6 +61,7 @@ export default {
 
     .navigation {
         padding: 20px 0;
+        height: 80px;
     }
 }
 

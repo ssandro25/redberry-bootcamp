@@ -9,7 +9,7 @@ const routes = [
         name: 'home',
         component: Index,
         meta: {
-            title: 'რედბერი - მთავარი გვერდი'
+            title: 'Redberry - მთავარი გვერდი'
         }
     },
 

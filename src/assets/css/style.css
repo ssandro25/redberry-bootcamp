@@ -69,6 +69,18 @@ body {
 .cursor-pointer {
     cursor: pointer;
 }
+
+.home__btn_arrow {
+    width: 44px;
+    height: 44px;
+    background-color: #E4E3EB;
+    z-index: 2;
+    top: 120px;
+
+    &:hover {
+        background-color: #D8D7DF;
+    }
+}
 @media (min-width: 1400px) {
     .container {
         max-width: 1288px;

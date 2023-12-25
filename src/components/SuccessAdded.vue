@@ -43,7 +43,7 @@ export default {
 
 <style scoped lang="scss">
 .success__added {
-    z-index: 2;
+    z-index: 1022;
     width: 480px;
     height: 300px;
     border-radius: 12px;
@@ -64,7 +64,7 @@ export default {
 }
 .message__backdrop {
     position: fixed;
-    z-index: 1;
+    z-index: 1020;
     top: 0;
     height: 100vh;
     width: 100vw;

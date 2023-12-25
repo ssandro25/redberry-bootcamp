@@ -1,5 +1,12 @@
 <template>
     <div class="blog__page container">
+        <router-link
+            to="/"
+            class="home__btn_arrow d-flex align-items-center justify-content-center rounded-circle position-fixed"
+        >
+            <img :src="ArrowIcon" alt="">
+        </router-link>
+
         <div class="blog__page__container_wrap mx-auto">
              <div class="blog">
                  <div class="blog__image">
@@ -55,6 +62,7 @@
 </template>
 
 <script>
+import ArrowIcon from "@/assets/images/arrow.svg"
 import moment from 'moment';
 import Api from "@/requests/Request"
 import SimilarBlogs from "@/components/SimilarBlogs.vue";
@@ -70,7 +78,8 @@ export default {
     data() {
         return {
             currentBlog: [],
-            similarBlogs: []
+            similarBlogs: [],
+            ArrowIcon
         }
     },
 
@@ -101,11 +110,14 @@ export default {
 
         api.getBlogs().then(response => {
             this.similarBlogs = response.data.data.filter(blog => {
-                return blog.categories.some(category => {
-                    return this.currentBlog.categories.some(
-                        currentCategory => currentCategory.title === category.title
-                    );
-                });
+                return (
+                    blog.id !== this.currentBlog.id &&
+                    blog.categories.some(category => {
+                        return this.currentBlog.categories.some(
+                            currentCategory => currentCategory.title === category.title
+                        );
+                    })
+                );
             });
         });
     }
