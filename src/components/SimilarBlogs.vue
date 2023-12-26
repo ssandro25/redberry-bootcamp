@@ -12,8 +12,7 @@
             v-else
             :slides-per-view="3"
             :space-between="50"
-            @swiper="onSwiper"
-            @slideChange="onSlideChange"
+            navigation
         >
             <swiper-slide
                 v-for="blog in filteredBlogs"
@@ -73,6 +72,7 @@
 <script>
 import ArrowIcon from "@/assets/images/arrow-icon.svg"
 import {Swiper, SwiperSlide} from 'swiper/vue';
+import {Navigation} from "swiper/modules";
 import moment from 'moment';
 
 export default {
@@ -89,18 +89,19 @@ export default {
 
     data() {
         return {
-            ArrowIcon
+            ArrowIcon,
+            modules: [Navigation],
         }
     },
 
     methods: {
-        onSwiper(swiper) {
-            console.log(swiper);
-        },
-
-        onSlideChange() {
-            console.log('slide change');
-        },
+        // onSwiper(swiper) {
+        //     console.log(swiper);
+        // },
+        //
+        // onSlideChange() {
+        //     console.log('slide change');
+        // },
 
         formatDate(date) {
             return moment(date).format('DD.MM.YYYY');

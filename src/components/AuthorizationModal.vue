@@ -102,7 +102,8 @@ export default {
                 console.log(response)
                 if (response && response.status === 204) {
                     this.authorized = true;
-                    this.$store.dispatch('setAuthorized', this.authorized)
+                    localStorage.setItem('authorized', true)
+                    // this.$store.dispatch('setAuthorized', this.authorized)
 
                 }
             }).catch(error => {
