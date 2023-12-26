@@ -25,6 +25,7 @@ export default class Api {
         for(let file of image){
             formData.append('image', file)
         }
+        // formData.append('image', image)
         formData.append('author', author)
         formData.append('publish_date', publish_date)
         formData.append('categories', categories)

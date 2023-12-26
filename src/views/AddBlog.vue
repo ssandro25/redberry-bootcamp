@@ -43,6 +43,7 @@
                                     id="choose__file_input"
                                     class="opacity-0 choose__file_input position-absolute cursor-pointer"
                                     type="file"
+                                    accept="image/*"
                                 >
                             </div>
 
@@ -127,7 +128,6 @@
                                     'not_valid__input' : getNonSpaceLength(title) < 4 && title.trim().length !== 0
                                 }"
                                 placeholder="შეიყვანეთ სათაური"
-                                @input="validateTitle"
                             >
 
                             <span :class="['validation__property mt-2', {
@@ -258,8 +258,8 @@
 
                             <div
                                 v-if="!isEmailValid"
-                                  class="email_validation__property d-flex align-items-start gap-2 mt-2"
-                                  :class="{
+                                class="email_validation__property d-flex align-items-start gap-2 mt-2"
+                                :class="{
                                     'd-none' : isEmailValid || !email.length
                                   }"
                             >
@@ -310,12 +310,12 @@ export default {
 
     data() {
         return {
-            author: '',
-            title: '',
-            description: '',
-            date: null,
-            email: '',
-            categories: [],
+            author: localStorage.getItem('author') || '',
+            title: localStorage.getItem('title') || '',
+            description: localStorage.getItem('description') || '',
+            date: localStorage.getItem('date') || null,
+            email: localStorage.getItem('email') || '',
+            categories: JSON.parse(localStorage.getItem('categories')) || [],
             options: [],
             file: null,
             fileName: null,
@@ -326,7 +326,30 @@ export default {
             GalleryIcon,
             CloseIcon,
             InfoIcon,
-            ArrowIcon
+            ArrowIcon,
+        }
+    },
+
+    watch: {
+        author(newValue) {
+            localStorage.setItem('author', newValue);
+            this.validGeorgianCharacters()
+        },
+        title(newValue) {
+            localStorage.setItem('title', newValue);
+        },
+        description(newValue) {
+            localStorage.setItem('description', newValue);
+        },
+        date(newValue) {
+            localStorage.setItem('date', newValue);
+        },
+        email(newValue) {
+            localStorage.setItem('email', newValue);
+            this.validateEmail();
+        },
+        categories(newValue) {
+            localStorage.setItem('categories', JSON.stringify(newValue));
         }
     },
 
@@ -355,12 +378,9 @@ export default {
         },
 
         validateEmail() {
-            const emailRegex = /@redberry\.ge$/;
-            this.isEmailValid = emailRegex.test(this.email);
-        },
-
-        validateTitle() {
-            this.$emit('input', this.title.trim());
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            const domainRegex = /@redberry\.ge$/;
+            this.isEmailValid = emailRegex.test(this.email) && domainRegex.test(this.email);
         },
 
         getNonSpaceLength(str) {
@@ -372,6 +392,7 @@ export default {
                 selectedIndexes.filter(index => index >= 0 && index < this.options.length).map(index => this.options[index]?.title);
 
                 this.categories = selectedIndexes;
+                localStorage.setItem('categories', JSON.stringify(this.categories));
             }
         },
 
@@ -396,7 +417,8 @@ export default {
             }
         })
 
-
+        this.validGeorgianCharacters()
+        this.validateEmail();
     },
 
     computed: {
