@@ -20,274 +20,278 @@
                     ბლოგის დამატება
                 </h1>
 
-                <div class="row">
-                    <div class="col-12">
-                        <div class="d-flex flex-column">
-                            <label for="" class="label">
-                                ატვირთეთ ფოტო
-                            </label>
+                <form>
 
-                            <div
-                                v-if="!file"
-                                class="add__file__container text-center p-5 mt-2 position-relative"
-                            >
-                                <img :src="AddFileIcon" alt="Add file icon">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="d-flex flex-column">
+                                <label for="" class="label">
+                                    ატვირთეთ ფოტო
+                                </label>
 
-                                <p class="add__file__container--label mt-4 mb-0">
-                                    ჩააგდეთ ფაილი აქ ან
-                                    <span
-                                        class="text-decoration-underline cursor-pointer"
-                                    >
-                                        აირჩიეთ ფაილი
-                                    </span>
-                                </p>
-
-                                <input
-                                    @change="addFile"
-                                    id="choose__file_input"
-                                    class="opacity-0 choose__file_input position-absolute cursor-pointer"
-                                    type="file"
-                                    accept="image/*"
+                                <div
+                                    v-if="!file"
+                                    class="add__file__container text-center p-5 mt-2 position-relative"
                                 >
-                            </div>
+                                    <img :src="AddFileIcon" alt="Add file icon">
 
-                            <div v-else class="added__file d-flex align-items-center justify-content-between p-3 mt-2">
-                                <div class="d-flex align-items-center gap-2 text-truncate">
-                                    <img :src="GalleryIcon" alt="">
+                                    <p class="add__file__container--label mt-4 mb-0">
+                                        ჩააგდეთ ფაილი აქ ან
+                                        <span
+                                            class="text-decoration-underline cursor-pointer"
+                                        >
+                                            აირჩიეთ ფაილი
+                                        </span>
+                                    </p>
 
-                                    <span :title="fileName" class="added__file_name text-truncate">
-                                        {{ fileName }}
-                                    </span>
+                                    <input
+                                        @change="addFile"
+                                        id="choose__file_input"
+                                        class="opacity-0 choose__file_input position-absolute cursor-pointer"
+                                        type="file"
+                                        accept="image/*"
+                                    >
                                 </div>
 
-                                <button
-                                    title="ფოტოს წაშლა"
-                                    type="button"
-                                    class="btn p-0 border-0"
-                                    @click="removeChosenFile()"
-                                >
-                                    <img :src="CloseIcon" alt="">
-                                </button>
+                                <div v-else class="added__file d-flex align-items-center justify-content-between p-3 mt-2">
+                                    <div class="d-flex align-items-center gap-2 text-truncate">
+                                        <img :src="GalleryIcon" alt="">
+
+                                        <span :title="fileName" class="added__file_name text-truncate">
+                                            {{ fileName }}
+                                        </span>
+                                    </div>
+
+                                    <button
+                                        title="ფოტოს წაშლა"
+                                        type="button"
+                                        class="btn p-0 border-0"
+                                        @click="removeChosenFile()"
+                                    >
+                                        <img :src="CloseIcon" alt="">
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="col-md-6 mt-4" >
-                        <div class="d-flex flex-column">
-                            <label for="author" class="label">
-                                ავტორი *
-                            </label>
+                        <div class="col-md-6 mt-4" >
+                            <div class="d-flex flex-column">
+                                <label for="author" class="label">
+                                    ავტორი *
+                                </label>
 
-                            <input
-                                v-model="author"
-                                id="author"
-                                type="text"
-                                class="form-control mt-2"
-                                :class="{
-                                    'valid__input': getNonSpaceLength(author) >= 4 &&  wordCount >= 2 &&  isGeorgianCharacters,
-                                    'not_valid__input' :getNonSpaceLength(author) < 4 && author.trim().length !== 0 || wordCount < 2  && author.length !== 0 || !isGeorgianCharacters && author.length !== 0
-                                }"
-                                placeholder="შეიყვანეთ ავტორი"
-                                @input="validGeorgianCharacters"
-                            >
+                                <input
+                                    v-model="author"
+                                    id="author"
+                                    type="text"
+                                    class="form-control mt-2"
+                                    :class="{
+                                        'valid__input': getNonSpaceLength(author) >= 4 &&  wordCount >= 2 &&  isGeorgianCharacters,
+                                        'not_valid__input' :getNonSpaceLength(author) < 4 && author.trim().length !== 0 || wordCount < 2  && author.length !== 0 || !isGeorgianCharacters && author.length !== 0
+                                    }"
+                                    placeholder="შეიყვანეთ ავტორი"
+                                    @input="validGeorgianCharacters"
+                                >
 
-                            <ul class="validation d-flex flex-column gap-1 ps-4 mt-2 mb-0">
-                                <li :class="['validation__property', {
-                                    'is__valid' : getNonSpaceLength(author) >= 4,
-                                    'is_not__valid' : getNonSpaceLength(author) < 4 && author.trim().length !== 0
-                                }]">
-                                    მინიმუმ 4 სიმბოლო
-                                </li>
+                                <ul class="validation d-flex flex-column gap-1 ps-4 mt-2 mb-0">
+                                    <li :class="['validation__property', {
+                                        'is__valid' : getNonSpaceLength(author) >= 4,
+                                        'is_not__valid' : getNonSpaceLength(author) < 4 && author.trim().length !== 0
+                                    }]">
+                                        მინიმუმ 4 სიმბოლო
+                                    </li>
 
-                                <li :class="['validation__property', {
-                                    'is__valid' : wordCount >= 2,
-                                    'is_not__valid' : wordCount < 2 && author.trim().length !== 0
-                                  }]">
-                                    მინიმუმ ორი სიტყვა
-                                </li>
+                                    <li :class="['validation__property', {
+                                        'is__valid' : wordCount >= 2,
+                                        'is_not__valid' : wordCount < 2 && author.trim().length !== 0
+                                      }]">
+                                        მინიმუმ ორი სიტყვა
+                                    </li>
 
-                                <li :class="['validation__property', {
-                                    'is__valid' : isGeorgianCharacters,
-                                    'is_not__valid' : !isGeorgianCharacters && author.trim().length !== 0
-                                  }]">
-                                    მხოლოდ ქართული სიმბოლოები
-                                </li>
-                            </ul>
+                                    <li :class="['validation__property', {
+                                        'is__valid' : isGeorgianCharacters,
+                                        'is_not__valid' : !isGeorgianCharacters && author.trim().length !== 0
+                                      }]">
+                                        მხოლოდ ქართული სიმბოლოები
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="col-md-6 mt-4">
-                        <div class="d-flex flex-column">
-                            <label for="title" class="label">
-                                სათაური *
-                            </label>
+                        <div class="col-md-6 mt-4">
+                            <div class="d-flex flex-column">
+                                <label for="title" class="label">
+                                    სათაური *
+                                </label>
 
-                            <input
-                                v-model="title"
-                                id="title"
-                                type="text"
-                                class="form-control mt-2"
-                                :class="{
-                                    'valid__input': getNonSpaceLength(title) >= 4,
-                                    'not_valid__input' : getNonSpaceLength(title) < 4 && title.trim().length !== 0
-                                }"
-                                placeholder="შეიყვანეთ სათაური"
-                            >
+                                <input
+                                    v-model="title"
+                                    id="title"
+                                    type="text"
+                                    class="form-control mt-2"
+                                    :class="{
+                                        'valid__input': getNonSpaceLength(title) >= 4,
+                                        'not_valid__input' : getNonSpaceLength(title) < 4 && title.trim().length !== 0
+                                    }"
+                                    placeholder="შეიყვანეთ სათაური"
+                                >
 
-                            <span :class="['validation__property mt-2', {
-                                  'is__valid' : getNonSpaceLength(title) >= 4,
-                                  'is_not__valid' : getNonSpaceLength(title) < 4 && title.trim().length !== 0
-                                }]">
-                                  მინიმუმ 4 სიმბოლო
-                            </span>
-                        </div>
-                    </div>
-
-                    <div class="col-12 mt-4">
-                        <div class="d-flex flex-column">
-                            <label for="description" class="label">
-                                აღწერა *
-                            </label>
-
-                            <textarea
-                                v-model="description"
-                                id="description"
-                                class="form-control mt-2"
-                                :class="{
-                                    'valid__input': getNonSpaceLength(description) >= 4,
-                                    'not_valid__input' : getNonSpaceLength(description) < 4 && description.trim().length !== 0
-                                }"
-                                placeholder="შეიყვანეთ აღწერა"
-                                rows="5"
-                            ></textarea>
-
-                            <span :class="['validation__property mt-2', {
-                                'is__valid' : getNonSpaceLength(description) >= 4,
-                                'is_not__valid' : getNonSpaceLength(description) < 4 && description.trim().length !== 0
-                            }]">
-                                მინიმუმ 4 სიმბოლო
-                            </span>
-                        </div>
-                    </div>
-
-                    <div class="col-6 mt-4">
-                        <div class="d-flex flex-column">
-                            <label for="date" class="label">
-                                გამოქვეყნების თარიღი *
-                            </label>
-
-                            <input
-                                v-model="date"
-                                id="date"
-                                type="date"
-                                class="form-control mt-2"
-                                :class="{
-                                    'valid__input': date,
-                                }"
-                                placeholder="შეიყვანეთ თარიღი "
-                            >
-                        </div>
-                    </div>
-
-                    <div class="col-6 mt-4">
-                        <div class="d-flex flex-column">
-                            <label class="label">
-                                კატეგორია *
-                            </label>
-
-                            <Multiselect
-                                @change="selectCategory"
-                                :hideSelected="false"
-                                :canClear="false"
-                                :closeOnSelect="false"
-                                noResultsText="ცარიელია."
-                                wra
-                                mode="tags"
-                                v-model="categories"
-                                :options="options"
-                                placeholder="აირჩიეთ კატეგორია"
-                                class="mt-2"
-                                :class="{ 'valid__input': categories.length > 0 }"
-                                label="title"
-                            >
-
-                                <template v-slot:tag="{ option, handleTagRemove, disabled }">
-                                    <div
-                                        :style="`background-color: ${option.background_color}; color: ${option.text_color}`"
-                                        class="multiselect-tag is-user"
-                                        :class="{ 'is-disabled': disabled }">
-
-                                        {{ option.title }}
-                                        <div
-                                            v-if="!disabled"
-                                            class="multiselect-tag-remove"
-                                            @mousedown.prevent="handleTagRemove(option, $event)"
-                                        >
-                                          <span class="multiselect-tag-remove-icon">
-                                              {{ option.title }}
-                                          </span>
-                                        </div>
-                                    </div>
-                                </template>
-
-                                <template v-slot:option="{ option }">
-                                    <div
-                                        class="multiselect-option__item"
-                                        :style="`background-color: ${option.background_color}; color: ${option.text_color}`">
-                                        {{ option.title }}
-                                    </div>
-                                </template>
-                            </Multiselect>
-                        </div>
-                    </div>
-
-                    <div class="col-6 mt-4">
-                        <div class="d-flex flex-column">
-                            <label for="email" class="label">
-                                ელ-ფოსტა
-                            </label>
-
-                            <input
-                                v-model="email"
-                                id="email"
-                                type="email"
-                                class="form-control mt-2"
-                                :class="{
-                                    'valid__input': isEmailValid && email.length !== 0,
-                                    'not_valid__input' : !isEmailValid && email.length !== 0
-                                }"
-                                placeholder="Example@redberry.ge"
-                                @input="validateEmail"
-                            >
-
-                            <div
-                                v-if="!isEmailValid"
-                                class="email_validation__property d-flex align-items-start gap-2 mt-2"
-                                :class="{
-                                    'd-none' : isEmailValid || !email.length
-                                  }"
-                            >
-                                <img :src="InfoIcon" alt="">
-
-                                <span>
-                                    მეილი უნდა მთავრდებოდეს @redberry.ge-ით
+                                <span :class="['validation__property mt-2', {
+                                      'is__valid' : getNonSpaceLength(title) >= 4,
+                                      'is_not__valid' : getNonSpaceLength(title) < 4 && title.trim().length !== 0
+                                    }]">
+                                      მინიმუმ 4 სიმბოლო
                                 </span>
                             </div>
                         </div>
-                    </div>
-                </div>
 
-                <div class="row">
-                    <div class="col-6 ms-auto">
-                        <button
-                            :disabled="!isDisabled"
-                            class="btn btn-primary w-100 publish_blog__btn"
-                            @click="postBlog()"
-                        >
-                            გამოქვეყნება
-                        </button>
+                        <div class="col-12 mt-4">
+                            <div class="d-flex flex-column">
+                                <label for="description" class="label">
+                                    აღწერა *
+                                </label>
+
+                                <textarea
+                                    v-model="description"
+                                    id="description"
+                                    class="form-control mt-2"
+                                    :class="{
+                                        'valid__input': getNonSpaceLength(description) >= 4,
+                                        'not_valid__input' : getNonSpaceLength(description) < 4 && description.trim().length !== 0
+                                    }"
+                                    placeholder="შეიყვანეთ აღწერა"
+                                    rows="5"
+                                ></textarea>
+
+                                <span :class="['validation__property mt-2', {
+                                    'is__valid' : getNonSpaceLength(description) >= 4,
+                                    'is_not__valid' : getNonSpaceLength(description) < 4 && description.trim().length !== 0
+                                }]">
+                                    მინიმუმ 4 სიმბოლო
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="col-6 mt-4">
+                            <div class="d-flex flex-column">
+                                <label for="date" class="label">
+                                    გამოქვეყნების თარიღი *
+                                </label>
+
+                                <input
+                                    v-model="date"
+                                    id="date"
+                                    type="date"
+                                    class="form-control mt-2"
+                                    :class="{
+                                        'valid__input': date,
+                                    }"
+                                    placeholder="შეიყვანეთ თარიღი "
+                                >
+                            </div>
+                        </div>
+
+                        <div class="col-6 mt-4">
+                            <div class="d-flex flex-column">
+                                <label class="label">
+                                    კატეგორია *
+                                </label>
+
+                                <Multiselect
+                                    @change="selectCategory"
+                                    :hideSelected="false"
+                                    :canClear="false"
+                                    :closeOnSelect="false"
+                                    noResultsText="ცარიელია."
+                                    wra
+                                    mode="tags"
+                                    v-model="categories"
+                                    :options="options"
+                                    placeholder="აირჩიეთ კატეგორია"
+                                    class="mt-2"
+                                    :class="{ 'valid__input': categories.length > 0 }"
+                                    label="title"
+                                >
+
+                                    <template v-slot:tag="{ option, handleTagRemove, disabled }">
+                                        <div
+                                            :style="`background-color: ${option.background_color}; color: ${option.text_color}`"
+                                            class="multiselect-tag is-user"
+                                            :class="{ 'is-disabled': disabled }">
+
+                                            {{ option.title }}
+                                            <div
+                                                v-if="!disabled"
+                                                class="multiselect-tag-remove"
+                                                @mousedown.prevent="handleTagRemove(option, $event)"
+                                            >
+                                              <span class="multiselect-tag-remove-icon">
+                                                  {{ option.title }}
+                                              </span>
+                                            </div>
+                                        </div>
+                                    </template>
+
+                                    <template v-slot:option="{ option }">
+                                        <div
+                                            class="multiselect-option__item"
+                                            :style="`background-color: ${option.background_color}; color: ${option.text_color}`">
+                                            {{ option.title }}
+                                        </div>
+                                    </template>
+                                </Multiselect>
+                            </div>
+                        </div>
+
+                        <div class="col-6 mt-4">
+                            <div class="d-flex flex-column">
+                                <label for="email" class="label">
+                                    ელ-ფოსტა
+                                </label>
+
+                                <input
+                                    v-model="email"
+                                    id="email"
+                                    type="email"
+                                    class="form-control mt-2"
+                                    :class="{
+                                        'valid__input': isEmailValid && email.length !== 0,
+                                        'not_valid__input' : !isEmailValid && email.length !== 0
+                                    }"
+                                    placeholder="Example@redberry.ge"
+                                    @input="validateEmail"
+                                >
+
+                                <div
+                                    v-if="!isEmailValid"
+                                    class="email_validation__property d-flex align-items-start gap-2 mt-2"
+                                    :class="{
+                                        'd-none' : isEmailValid || !email.length
+                                      }"
+                                >
+                                    <img :src="InfoIcon" alt="">
+
+                                    <span>
+                                        მეილი უნდა მთავრდებოდეს @redberry.ge-ით
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
+
+                    <div class="row">
+                        <div class="col-6 ms-auto">
+                            <button
+                                :disabled="!isDisabled"
+                                class="btn btn-primary w-100 publish_blog__btn"
+                                type="submit"
+                                @click="postBlog()"
+                            >
+                                გამოქვეყნება
+                            </button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
