@@ -47,10 +47,6 @@ export default {
             Logo
         }
     },
-
-    mounted() {
-        console.log(this.getAuthorized)
-    }
 }
 </script>
 

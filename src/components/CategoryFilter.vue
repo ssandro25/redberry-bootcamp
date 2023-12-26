@@ -5,20 +5,30 @@
                 v-for="category in categories"
                 :key="category.id"
                 class="categories_list__item text-nowrap"
-                :style="`background-color: ${category.background_color};`"
             >
-                <router-link
-                    class="categories_list__item-link text-decoration-none" to="/"
-                    :style="`color: ${category.text_color}`"
+<!--                <router-link-->
+<!--                    :to="'/' + replaceSpaces(category.title)"-->
+<!--                    class="categories_list__item-link text-decoration-none"-->
+<!--                    :style="`color: ${category.text_color}`"-->
+<!--                >-->
+<!--                    {{ category.title }}-->
+<!--                </router-link>-->
+
+                <button
+                    type="button"
+                    class="btn border-0 categories_list__item-btn text-decoration-none"
+                    :style="{ color: category.text_color,  backgroundColor: category.background_color, outline: isCategorySelected(category.id) ? '1px solid #000' : 'none' }"
+                    @click="pushCategory(category.id)"
                 >
                     {{ category.title }}
-                </router-link>
+                </button>
             </li>
         </ul>
     </section>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import Api from "@/requests/Request"
 
 const api = new Api()
@@ -31,12 +41,42 @@ export default {
         }
     },
 
+    methods: {
+        pushCategory(categoryId) {
+            const isCategoryAlreadySelected = this.isCategorySelected(categoryId);
+
+            if (isCategoryAlreadySelected) {
+                this.removeCategory(categoryId);
+            } else {
+                this.addCategory(categoryId);
+            }
+        },
+
+        addCategory(categoryId) {
+            this.$store.dispatch('setChosenCategory', categoryId);
+        },
+
+        removeCategory(categoryId) {
+            this.$store.dispatch('removeChosenCategory', categoryId);
+        },
+
+        isCategorySelected(categoryId) {
+            return this.getChosenCategory.some(category => category.id === categoryId);
+        }
+    },
+
     mounted() {
         api.getCategories().then(response => {
             if (response.data) {
                 this.categories = response.data.data
             }
         })
+    },
+
+    computed: {
+        ...mapGetters([
+            'getChosenCategory'
+        ])
     }
 }
 </script>
@@ -51,10 +91,11 @@ export default {
         list-style: none;
 
         &__item {
-            padding: 8px 16px;
-            border-radius: 30px;
+            padding: 1px;
 
-            &-link {
+            &-btn {
+                border-radius: 30px !important;
+                padding: 8px 16px;
                 font-size: 12px;
                 line-height: 16px;
             }

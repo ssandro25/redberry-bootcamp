@@ -22,7 +22,7 @@ export default {
 
     data() {
         return {
-            blogs: []
+            blogs: [],
         }
     },
 
@@ -30,6 +30,7 @@ export default {
         api.getBlogs().then(response => {
             this.blogs = response.data.data
         })
+
     }
 }
 </script>

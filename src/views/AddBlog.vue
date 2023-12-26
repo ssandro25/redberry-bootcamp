@@ -41,7 +41,7 @@
                                 <input
                                     @change="addFile"
                                     id="choose__file_input"
-                                    class="opacity-0 choose__file_input position-absolute"
+                                    class="opacity-0 choose__file_input position-absolute cursor-pointer"
                                     type="file"
                                 >
                             </div>

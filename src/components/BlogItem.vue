@@ -55,6 +55,7 @@
 <script>
 import ArrowIcon from "@/assets/images/arrow-icon.svg"
 import moment from 'moment';
+import { mapGetters } from "vuex";
 
 export default {
     name: "BlogItem",
@@ -76,16 +77,33 @@ export default {
     },
 
     computed: {
+        ...mapGetters([
+            'getChosenCategory'
+        ]),
+
+        // filteredBlogs() {
+        //     const today = moment();
+        //
+        //     console.log(today._d)
+        //
+        //
+        //     return this.blogs.filter(blog => {
+        //         const showBlogDate = moment(blog.publish_date);
+        //
+        //         return showBlogDate.isSameOrBefore(today, 'day');
+        //     });
+        // },
+
         filteredBlogs() {
             const today = moment();
-
-            console.log(today._d)
-
+            const chosenCategoryIds = this.getChosenCategory.map(category => category.id);
 
             return this.blogs.filter(blog => {
                 const showBlogDate = moment(blog.publish_date);
 
-                return showBlogDate.isSameOrBefore(today, 'day');
+                const isCategorySelected = blog.categories.some(category => chosenCategoryIds.includes(category.id));
+
+                return showBlogDate.isSameOrBefore(today, 'day') && (chosenCategoryIds.length === 0 || isCategorySelected);
             });
         },
     },
