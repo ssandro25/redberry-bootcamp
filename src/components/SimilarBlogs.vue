@@ -14,7 +14,6 @@
             :breakpoints="32"
         >
             <template #addons>
-
                 <div class="slide__nav">
                     <navigation />
                 </div>

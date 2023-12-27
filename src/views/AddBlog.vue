@@ -30,8 +30,9 @@
                                 </label>
 
                                 <div
-
+                                    v-if="!file"
                                     class="add__file__container text-center p-5 mt-2 position-relative"
+                                    :style="imageErrorMessage ? 'border-color: red !important' : ''"
                                 >
                                     <img :src="AddFileIcon" alt="Add file icon">
 
@@ -47,13 +48,17 @@
                                     <input
                                         @change="addFile"
                                         id="choose__file_input"
-                                        class=" choose__file_input  cursor-pointer"
+                                        class="opacity-0 position-absolute choose__file_input cursor-pointer"
                                         type="file"
-                                        accept="image/*"
                                     >
+
+                                    <p class="text-danger mb-0">
+                                        {{ imageErrorMessage }}
+                                    </p>
                                 </div>
 
-                                <div  class="added__file d-flex align-items-center justify-content-between p-3 mt-2">
+                                <div v-else
+                                     class="added__file d-flex align-items-center justify-content-between p-3 mt-2">
                                     <div class="d-flex align-items-center gap-2 text-truncate">
                                         <img :src="GalleryIcon" alt="">
 
@@ -326,7 +331,7 @@ export default {
             categories: JSON.parse(localStorage.getItem('categories')) || [],
             options: [],
             file: null,
-            fileName: null,
+            // fileName: null,
             isGeorgianCharacters: false,
             isEmailValid: true,
             addedSuccess: false,
@@ -336,6 +341,7 @@ export default {
             InfoIcon,
             ArrowIcon,
             localStorageKey: 'savedImage',
+            imageErrorMessage: null
         }
     },
 
@@ -351,6 +357,10 @@ export default {
             localStorage.setItem('description', newValue);
         },
         date(newValue) {
+            if (newValue === null) {
+                localStorage.removeItem('date')
+                return
+            }
             localStorage.setItem('date', newValue);
         },
         email(newValue) {
@@ -363,48 +373,70 @@ export default {
     },
 
     methods: {
-        // chooseFile() {
-        //     document.querySelector('#choose__file_input').click()
-        // },
 
-        // addFile(event){
-        //     this.file = event.target.files;
-        //
-        //     this.fileName = this.file[0].name;
-        //
-        //     console.log(this.file, 'file')
-        //     console.log(typeof this.file[0].name, 'file name')
-        // },
-        //
-        // removeChosenFile() {
-        //     this.file = null
-        // },
+        convertBase64ToFile(fileJson) {
+            const base64String = fileJson.data;
+            const fileType = fileJson.type;
+            const fileName = fileJson.name;
 
+            const base64WithoutPrefix = base64String.replace(/^data:image\/(png|jpg|jpeg);base64,/, '');
+
+
+            const byteCharacters = atob(base64WithoutPrefix);
+            const byteNumbers = new Array(byteCharacters.length);
+            for (let i = 0; i < byteCharacters.length; i++) {
+                byteNumbers[i] = byteCharacters.charCodeAt(i);
+            }
+            const byteArray = new Uint8Array(byteNumbers);
+            const blob = new Blob([byteArray], { type: fileType });
+
+            return new File([blob], fileName, { type: fileType });
+        },
+
+        validateImage() {
+            if (!this.file) return false;
+
+            const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+            const maxSizeInBytes = 5242880; // 5MB
+
+
+            if (!allowedTypes.includes(this.file.type)) {
+                this.imageErrorMessage = "აირჩიეთ მხოლოდ მითითებული ფორმატები: jpeg, png, jpg";
+                return false;
+            } else if (this.file.size > maxSizeInBytes) {
+                this.imageErrorMessage = "სურათის მაქსიმალური ზომა " + maxSizeInBytes + "მბ";
+                return false;
+            }
+
+            this.imageErrorMessage = null;
+            return true
+        },
 
         async addFile(event) {
-            const file = event.target.files[0];
+            this.file = event.target.files[0];
 
-            // Конвертируем файл в base64
+            if (!this.validateImage()) {
+                this.file = null;
+                return;
+            }
+
             try {
-                const base64Image = await this.fileToBase64(file);
+                const base64Image = await this.fileToBase64(this.file);
                 this.fileData = {
-                    name: file.name,
-                    type: file.type,
+                    name: this.file.name,
+                    type: this.file.type,
                     data: base64Image,
                 };
 
-                // Сохраняем в локальное хранилище
                 localStorage.setItem(this.localStorageKey, JSON.stringify(this.fileData));
-                this.fileName = file.name;
             } catch (error) {
-                console.error('Ошибка при чтении файла:', error);
+                console.error(error);
             }
         },
         removeChosenFile() {
-            // Удаляем изображение и его сохранение в локальном хранилище
             this.fileData = null;
             localStorage.removeItem(this.localStorageKey);
-            this.fileName = '';
+            this.file = null;
         },
 
         async fileToBase64(file) {
@@ -449,6 +481,16 @@ export default {
         postBlog() {
             api.postBlog(this.title, this.description, this.file, this.author, this.date, JSON.stringify(this.categories), this.email).then(() => {
                 this.addedSuccess = true
+
+                this.file = '';
+                localStorage.removeItem(this.localStorageKey);
+                this.title = '';
+                this.description = '';
+                this.author = '';
+                this.date = null;
+                this.categories = [];
+                this.email = '';
+
             })
         }
     },
@@ -461,9 +503,6 @@ export default {
                 this.options = this.options.map((obj) => {
                     return { ...obj, value: obj.id };
                 });
-
-                // console.log(response.data.data, 'response data.data')
-                // console.log(this.options, 'this.options')
             }
         })
 
@@ -472,8 +511,9 @@ export default {
 
         const savedImageData = localStorage.getItem(this.localStorageKey);
         if (savedImageData) {
-            // Если изображение найдено, устанавливаем его
             this.fileData = JSON.parse(savedImageData);
+
+            this.file = this.convertBase64ToFile(JSON.parse(savedImageData));
         }
     },
 
@@ -481,6 +521,14 @@ export default {
         wordCount() {
             const words = this.author.trim().split(/\s+/);
             return words.length;
+        },
+
+        fileName() {
+            if (!this.file) {
+                return null;
+            }
+
+            return this.file?.name
         },
 
         isDisabled() {

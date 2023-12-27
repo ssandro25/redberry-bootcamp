@@ -22,10 +22,10 @@ export default class Api {
 
         formData.append('title', title)
         formData.append('description', description)
-        for(let file of image){
-            formData.append('image', file)
-        }
-        // formData.append('image', image)
+        // for(let file of image){
+        //     formData.append('image', file)
+        // }
+        formData.append('image', image)
         formData.append('author', author)
         formData.append('publish_date', publish_date)
         formData.append('categories', categories)
