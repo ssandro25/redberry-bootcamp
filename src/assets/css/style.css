@@ -70,22 +70,6 @@ body {
     cursor: pointer;
 }
 
-.home__btn_arrow {
-    width: 44px;
-    height: 44px;
-    background-color: #E4E3EB;
-    z-index: 2;
-    top: 120px;
-    transition: .3s;
-
-    &:hover {
-        background-color: #D8D7DF;
-
-        & svg path{
-            fill: #fe3b1f !important;
-        }
-    }
-}
 input[type="date"] {
     position: relative;
     padding-left: 48px;

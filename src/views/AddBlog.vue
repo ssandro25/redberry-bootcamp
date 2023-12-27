@@ -4,16 +4,7 @@
     <div class="container-fluid__add_blog pb-65">
         <div class="container">
 
-            <router-link
-                to="/"
-                class="home__btn_arrow d-flex align-items-center justify-content-center rounded-circle position-fixed"
-            >
-<!--                <img :src="ArrowIcon" alt="">-->
-
-                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="16" viewBox="0 0 10 16" fill="none">
-                    <path d="M2 9C2.55228 9 3 8.55228 3 8C3 7.44772 2.55228 7 2 7L2 9ZM1.19289 7.29289C0.802369 7.68342 0.802369 8.31658 1.19289 8.70711L7.55685 15.0711C7.94738 15.4616 8.58054 15.4616 8.97107 15.0711C9.36159 14.6805 9.36159 14.0474 8.97107 13.6569L3.31421 8L8.97107 2.34315C9.36159 1.95262 9.36159 1.31946 8.97107 0.928932C8.58054 0.538407 7.94738 0.538407 7.55685 0.928932L1.19289 7.29289ZM2 7L1.9 7L1.9 9L2 9L2 7Z" fill="#1A1A1F"/>
-                </svg>
-            </router-link>
+            <MainPageButton />
 
             <div class="container__wrap mx-auto">
                 <h1 class="add_blog__title">
@@ -135,17 +126,17 @@
                                     type="text"
                                     class="form-control mt-2"
                                     :class="{
-                                        'valid__input': getNonSpaceLength(title) >= 4,
-                                        'not_valid__input' : getNonSpaceLength(title) < 4 && title.trim().length !== 0
+                                        'valid__input': getNonSpaceLength(title) >= 2,
+                                        'not_valid__input' : getNonSpaceLength(title) < 2 && title.trim().length !== 0
                                     }"
                                     placeholder="შეიყვანეთ სათაური"
                                 >
 
                                 <span :class="['validation__property mt-2', {
-                                      'is__valid' : getNonSpaceLength(title) >= 4,
-                                      'is_not__valid' : getNonSpaceLength(title) < 4 && title.trim().length !== 0
+                                      'is__valid' : getNonSpaceLength(title) >= 2,
+                                      'is_not__valid' : getNonSpaceLength(title) < 2 && title.trim().length !== 0
                                     }]">
-                                      მინიმუმ 4 სიმბოლო
+                                      მინიმუმ 2 სიმბოლო
                                 </span>
                             </div>
                         </div>
@@ -311,12 +302,14 @@ import CloseIcon from '@/assets/images/close-icon.svg'
 import InfoIcon from '@/assets/images/info-circle.svg'
 import SuccessAdded from "@/components/SuccessAdded.vue";
 import Api from "@/requests/Request"
+import MainPageButton from "@/components/MainPageButton.vue";
 
 const api = new Api()
 export default {
     name: "AddBlog",
 
     components: {
+        MainPageButton,
         SuccessAdded,
         Multiselect,
     },
@@ -537,7 +530,7 @@ export default {
                 && this.getNonSpaceLength(this.author) >= 4
                 && this.wordCount >= 2
                 && this.isGeorgianCharacters
-                && this.getNonSpaceLength(this.title) >= 4
+                && this.getNonSpaceLength(this.title) >= 2
                 && this.getNonSpaceLength(this.description) >= 4
                 && this.date
                 && this.categories.length > 0
