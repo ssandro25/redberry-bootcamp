@@ -491,6 +491,7 @@ export default {
                 this.categories = [];
                 this.email = '';
 
+                localStorage.removeItem('chosenCategory')
             })
         }
     },

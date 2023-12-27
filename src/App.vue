@@ -29,7 +29,8 @@ export default {
         baseToken() {
             axios.interceptors.request.use(
                 (config) => {
-                    config.headers.Authorization = 'Bearer 16023cff12f3008b4b9819629d88bad9b7cd73ba78988e738a156e41c1412ef0';
+                    const token = process.env.VUE_APP_API_TOKEN || "";
+                    config.headers.Authorization = 'Bearer ' + token;
                     return config;
                 },
                 (error) => {
