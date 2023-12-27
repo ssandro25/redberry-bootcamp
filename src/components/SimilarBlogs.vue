@@ -4,11 +4,12 @@
             მსგავსი სტატიები
         </h2>
 
-<!--        <p v-if="!filteredBlogs.length" class="not_found__text mb-0">-->
-<!--            მსგავსი სტატიები არ მოიძებნა...-->
-<!--        </p>-->
+        <p v-if="!filteredBlogs.length" class="not_found__text mb-0">
+            მსგავსი სტატიები არ მოიძებნა...
+        </p>
 
         <carousel
+            v-else
             :items-to-show="3"
             :breakpoints="32"
         >

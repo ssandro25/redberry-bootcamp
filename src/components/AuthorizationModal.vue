@@ -1,14 +1,29 @@
 <template>
-    <div class="modal fade" id="authorizationModal" tabindex="-1" aria-labelledby="authorizationModalLabel"
-         aria-hidden="true">
+    <div
+        class="modal fade"
+        id="authorizationModal"
+        tabindex="-1"
+        aria-labelledby="authorizationModalLabel"
+        aria-hidden="true"
+    >
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content border-0">
                 <div class="modal-header border-0 p-0">
                     <button
+                        v-if="!authorized"
                         type="button"
                         class="btn p-0 border-0"
                         data-bs-dismiss="modal"
                         aria-label="Close">
+                        <img :src="CloseIcon" alt="">
+                    </button>
+
+                    <button
+                        v-else
+                        type="button"
+                        class="btn p-0 border-0"
+                        @click="refreshRoute()"
+                    >
                         <img :src="CloseIcon" alt="">
                     </button>
                 </div>
@@ -114,7 +129,8 @@ export default {
         },
 
         refreshRoute() {
-            location.reload()
+            // location.reload()
+            location.href = "/"
         }
     },
 }
