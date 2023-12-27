@@ -113,10 +113,20 @@ export default {
 
 <style scoped lang="scss">
 .blog_item {
-    &__pic img {
+    &:hover &__pic img {
+        transform: scale(1.2);
+    }
+
+    &__pic {
+        overflow: hidden;
         border-radius: 12px;
         height: 328px;
-        object-fit: cover;
+        img {
+            border-radius: 12px;
+            height: 328px;
+            object-fit: cover;
+            transition: .8s;
+        }
     }
 
     &__author {
@@ -167,6 +177,11 @@ export default {
         line-height: 20px;
         font-weight: 500;
         color: #5D37F3;
+
+        &:hover {
+            opacity: .8;
+            text-decoration: underline !important;
+        }
     }
 }
 </style>
