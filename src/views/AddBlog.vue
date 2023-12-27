@@ -290,7 +290,7 @@
                                 :disabled="!isDisabled"
                                 class="btn btn-primary w-100 publish_blog__btn"
                                 type="submit"
-                                @click="postBlog()"
+                                @click.stop.prevent="postBlog()"
                             >
                                 გამოქვეყნება
                             </button>

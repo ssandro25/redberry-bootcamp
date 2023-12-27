@@ -114,7 +114,6 @@ export default {
     methods: {
         login() {
             api.login(this.email).then(response => {
-                console.log(response)
                 if (response && response.status === 204) {
                     this.authorized = true;
                     localStorage.setItem('authorized', this.authorized.toString())
