@@ -88,14 +88,12 @@ body {
 }
 input[type="date"] {
     position: relative;
-    padding-left: 48px; /* Установка отступа слева для текста даты */
+    padding-left: 48px;
 }
 input[type="date"]::-webkit-calendar-picker-indicator {
     position: absolute;
     left: 16px;
     top: 12px;
-    /*top: 50%;*/
-    /*transform: translateY(-50%);*/
     background: url("@/assets/images/calendar.svg") no-repeat;
     width: 20px;
     height: 20px;
