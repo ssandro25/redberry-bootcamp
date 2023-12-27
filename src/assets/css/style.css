@@ -18,7 +18,7 @@ body {
 /* Chrome, Edge, and Safari */
 *::-webkit-scrollbar {
     width: 16px;
-    height: 10px;
+    height: 14px;
 }
 
 *::-webkit-scrollbar-track {
@@ -85,6 +85,51 @@ body {
             fill: #fe3b1f !important;
         }
     }
+}
+
+/* Carousel styles */
+.carousel__slide {
+    display: block !important;
+    width: 31.5% !important;
+}
+.carousel__track {
+    gap: 32px;
+}
+
+.carousel__prev,
+.carousel__next {
+    width: 44px !important;
+    height: 44px !important;
+    fill: #fff;
+    background-color: #5D37F3;
+    border-radius: 50% !important;
+}
+.carousel__prev {
+    margin: 0 24px 0 0;
+    background-image: url("@/assets/images/arrow-left.svg");
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+.carousel__next {
+    margin: 0;
+    background-image: url("@/assets/images/arrow-right.svg");
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+.carousel__prev--disabled,
+.carousel__next--disabled {
+    /*background-color: #E4E3EB !important;*/
+    opacity: .2 !important;
+}
+.carousel__icon {
+    display: none;
+}
+
+.slide__nav {
+    position: relative;
+    top: -733px;
+    width: 112px;
+    right: -1160px;
 }
 @media (min-width: 1400px) {
     .container {

@@ -30,7 +30,7 @@
                                 </label>
 
                                 <div
-                                    v-if="!file"
+
                                     class="add__file__container text-center p-5 mt-2 position-relative"
                                 >
                                     <img :src="AddFileIcon" alt="Add file icon">
@@ -47,13 +47,13 @@
                                     <input
                                         @change="addFile"
                                         id="choose__file_input"
-                                        class="opacity-0 choose__file_input position-absolute cursor-pointer"
+                                        class=" choose__file_input  cursor-pointer"
                                         type="file"
                                         accept="image/*"
                                     >
                                 </div>
 
-                                <div v-else class="added__file d-flex align-items-center justify-content-between p-3 mt-2">
+                                <div  class="added__file d-flex align-items-center justify-content-between p-3 mt-2">
                                     <div class="d-flex align-items-center gap-2 text-truncate">
                                         <img :src="GalleryIcon" alt="">
 
@@ -335,6 +335,7 @@ export default {
             CloseIcon,
             InfoIcon,
             ArrowIcon,
+            localStorageKey: 'savedImage',
         }
     },
 
@@ -366,17 +367,58 @@ export default {
         //     document.querySelector('#choose__file_input').click()
         // },
 
-        addFile(event){
-            this.file = event.target.files;
+        // addFile(event){
+        //     this.file = event.target.files;
+        //
+        //     this.fileName = this.file[0].name;
+        //
+        //     console.log(this.file, 'file')
+        //     console.log(typeof this.file[0].name, 'file name')
+        // },
+        //
+        // removeChosenFile() {
+        //     this.file = null
+        // },
 
-            this.fileName = this.file[0].name;
 
-            console.log(this.file, 'file')
-            console.log(typeof this.file[0].name, 'file name')
+        async addFile(event) {
+            const file = event.target.files[0];
+
+            // Конвертируем файл в base64
+            try {
+                const base64Image = await this.fileToBase64(file);
+                this.fileData = {
+                    name: file.name,
+                    type: file.type,
+                    data: base64Image,
+                };
+
+                // Сохраняем в локальное хранилище
+                localStorage.setItem(this.localStorageKey, JSON.stringify(this.fileData));
+                this.fileName = file.name;
+            } catch (error) {
+                console.error('Ошибка при чтении файла:', error);
+            }
+        },
+        removeChosenFile() {
+            // Удаляем изображение и его сохранение в локальном хранилище
+            this.fileData = null;
+            localStorage.removeItem(this.localStorageKey);
+            this.fileName = '';
         },
 
-        removeChosenFile() {
-            this.file = null
+        async fileToBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+
+                reader.onload = () => {
+                    resolve(reader.result);
+                };
+
+                reader.onerror = reject;
+
+                reader.readAsDataURL(file);
+            });
         },
 
         validGeorgianCharacters() {
@@ -427,6 +469,12 @@ export default {
 
         this.validGeorgianCharacters()
         this.validateEmail();
+
+        const savedImageData = localStorage.getItem(this.localStorageKey);
+        if (savedImageData) {
+            // Если изображение найдено, устанавливаем его
+            this.fileData = JSON.parse(savedImageData);
+        }
     },
 
     computed: {

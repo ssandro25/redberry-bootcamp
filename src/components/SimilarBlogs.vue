@@ -4,20 +4,26 @@
             მსგავსი სტატიები
         </h2>
 
-        <p v-if="!filteredBlogs.length" class="not_found__text mb-0">
-            მსგავსი სტატიები არ მოიძებნა...
-        </p>
+<!--        <p v-if="!filteredBlogs.length" class="not_found__text mb-0">-->
+<!--            მსგავსი სტატიები არ მოიძებნა...-->
+<!--        </p>-->
 
-        <swiper
-            v-else
-            :slides-per-view="3"
-            :space-between="50"
-            navigation
+        <carousel
+            :items-to-show="3"
+            :breakpoints="32"
         >
-            <swiper-slide
+            <template #addons>
+
+                <div class="slide__nav">
+                    <navigation />
+                </div>
+            </template>
+
+            <slide
                 v-for="blog in filteredBlogs"
                 :key="blog.id"
-                :id="blog.id">
+                :id="blog.id"
+            >
                 <div>
                     <div class="blog_item">
                         <div class="blog_item__pic">
@@ -64,15 +70,16 @@
                         </router-link>
                     </div>
                 </div>
-            </swiper-slide>
-        </swiper>
+            </slide>
+        </carousel>
     </div>
 </template>
 
 <script>
+import 'vue3-carousel/dist/carousel.css'
+import { Carousel, Slide, Navigation } from 'vue3-carousel'
 import ArrowIcon from "@/assets/images/arrow-icon.svg"
-import {Swiper, SwiperSlide} from 'swiper/vue';
-import {Navigation} from "swiper/modules";
+
 import moment from 'moment';
 
 export default {
@@ -83,26 +90,18 @@ export default {
     },
 
     components: {
-        Swiper,
-        SwiperSlide,
+        Carousel,
+        Slide,
+        Navigation,
     },
 
     data() {
         return {
             ArrowIcon,
-            modules: [Navigation],
         }
     },
 
     methods: {
-        // onSwiper(swiper) {
-        //     console.log(swiper);
-        // },
-        //
-        // onSlideChange() {
-        //     console.log('slide change');
-        // },
-
         formatDate(date) {
             return moment(date).format('DD.MM.YYYY');
         },

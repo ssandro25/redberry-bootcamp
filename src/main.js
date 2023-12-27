@@ -5,7 +5,5 @@ import store from './store'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.bundle'
 import '@/assets/css/style.css'
-import 'swiper/css';
-import 'swiper/css/navigation';
 
 createApp(App).use(store).use(router).mount('#app')
