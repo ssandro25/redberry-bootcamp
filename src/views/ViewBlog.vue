@@ -176,6 +176,7 @@ export default {
                 font-weight: 400;
                 line-height: 28px;
                 margin-top: 40px;
+                white-space: pre-wrap;
             }
         }
     }

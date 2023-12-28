@@ -81,19 +81,6 @@ export default {
             'getChosenCategory'
         ]),
 
-        // filteredBlogs() {
-        //     const today = moment();
-        //
-        //     console.log(today._d)
-        //
-        //
-        //     return this.blogs.filter(blog => {
-        //         const showBlogDate = moment(blog.publish_date);
-        //
-        //         return showBlogDate.isSameOrBefore(today, 'day');
-        //     });
-        // },
-
         filteredBlogs() {
             const today = moment();
             const chosenCategoryIds = this.getChosenCategory.map(category => category.id);
@@ -170,6 +157,7 @@ export default {
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
         overflow: hidden;
+        white-space: pre-wrap;
     }
 
     .view_blog__link {

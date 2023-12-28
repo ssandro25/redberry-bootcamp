@@ -23,7 +23,7 @@
                                 <div
                                     v-if="!file"
                                     class="add__file__container text-center p-5 mt-2 position-relative"
-                                    :style="imageErrorMessage ? 'border-color: red !important' : ''"
+                                    :style="imageErrorMessage ? 'border-color: #EA1919 !important; background-color: #FAF2F3 !important' : ''"
                                 >
                                     <img :src="AddFileIcon" alt="Add file icon">
 
@@ -43,7 +43,7 @@
                                         type="file"
                                     >
 
-                                    <p class="text-danger mb-0">
+                                    <p class="add_file__error_message mb-0">
                                         {{ imageErrorMessage }}
                                     </p>
                                 </div>
@@ -390,14 +390,20 @@ export default {
             if (!this.file) return false;
 
             const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
-            const maxSizeInBytes = 5242880; // 5MB
+            // const maxSizeInBytes = 5242880; // 5MB
+            // const maxSizeInBytes = 200 * 1024; // 200 KB
+            const maxSizeInBytes = 248000; // 200 KB
+
+            console.log(this.file.size)
 
 
             if (!allowedTypes.includes(this.file.type)) {
-                this.imageErrorMessage = "აირჩიეთ მხოლოდ მითითებული ფორმატები: jpeg, png, jpg";
+                this.imageErrorMessage = 'აირჩიეთ მხოლოდ მითითებული ფორმატები: jpeg, png, jpg';
                 return false;
             } else if (this.file.size > maxSizeInBytes) {
-                this.imageErrorMessage = "სურათის მაქსიმალური ზომა " + maxSizeInBytes + "მბ";
+                // this.imageErrorMessage = "სურათის მაქსიმალური ზომა " + maxSizeInBytes/1024 + " კბ";
+                this.imageErrorMessage = 'სურათის მაქსიმალური ზომა 200 კბ';
+
                 return false;
             }
 
@@ -556,6 +562,10 @@ export default {
 .is_not__valid {
     color: #EA1919 !important;
 }
+.add_file__error_message {
+    color: #EA1919;
+    font-size: 14px;
+}
 .container-fluid__add_blog {
     background-color: #FBFAFF;
 }
@@ -563,6 +573,7 @@ export default {
 .added__file {
     background-color: rgba(242, 242, 250, 1);
     border-radius: 12px;
+    height: 56px;
 
     &_name {
         color: #1A1A1F;

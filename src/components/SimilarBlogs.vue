@@ -196,6 +196,7 @@ export default {
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
         overflow: hidden;
+        white-space: pre-wrap;
     }
 
     .view_blog__link {
