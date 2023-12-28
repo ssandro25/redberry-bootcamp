@@ -5,6 +5,7 @@
                 v-for="category in categories"
                 :key="category.id"
                 class="categories_list__item text-nowrap"
+                :title="category.title"
             >
 <!--                <router-link-->
 <!--                    :to="'/' + replaceSpaces(category.title)"-->

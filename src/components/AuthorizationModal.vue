@@ -48,7 +48,6 @@
                                 }"
                                 placeholder="Example@redberry.ge"
                                 id="email"
-                                @keyup.enter="login"
                             >
 
                             <p class="email_not_found__text mt-2 mb-0">
@@ -119,6 +118,7 @@ export default {
                 if (response && response.status === 204) {
                     this.authorized = true;
                     localStorage.setItem('authorized', this.authorized.toString())
+                    // this.$store.dispatch('setAuthorized', this.authorized)
 
                 }
             }).catch(error => {
@@ -129,6 +129,7 @@ export default {
         },
 
         refreshRoute() {
+            // location.reload()
             location.href = "/"
         }
     },
