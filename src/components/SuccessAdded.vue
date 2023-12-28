@@ -13,12 +13,22 @@
             ჩანაწი წარმატებით დაემატა
         </p>
 
-        <router-link
-            to="/"
+        <button
+            :disabled="getAddedSuccess"
             class="btn btn-primary w-100 mt-5"
+            @click="goToMainPage()"
         >
-            მთავარ გვერდზე დაბრუნება
-        </router-link>
+
+            <span v-if="!getAddedSuccess">
+               მთავარ გვერდზე დაბრუნება
+            </span>
+
+            <span v-else>
+                <span class="spinner-border spinner-border-sm me-1"></span>
+                <span role="status">ბლოგი იტვირთება</span>
+            </span>
+
+        </button>
     </div>
 
     <div class="message__backdrop">
@@ -29,15 +39,26 @@
 <script>
 import SuccessCheckIcon from "@/assets/images/tick-circle.svg"
 import CloseIcon from "@/assets/images/close.svg"
+
 export default {
     name: "SuccessAdded",
 
     data() {
         return {
             SuccessCheckIcon,
-            CloseIcon
+            CloseIcon,
+            getAddedSuccess : false,
         }
-    }
+    },
+
+    methods: {
+        goToMainPage() {
+            this.getAddedSuccess = true;
+            setTimeout(()=> {
+                location.href = "/"
+            }, 500)
+        }
+    },
 }
 </script>
 

@@ -46,7 +46,9 @@ body {
     background-color: #5D37F3;
     border-color: #5D37F3;
 }
-
+.btn:hover {
+    opacity: .85;
+}
 .form-control {
     border-radius: 12px;
     border-color: #E4E3EB;
