@@ -394,14 +394,11 @@ export default {
             // const maxSizeInBytes = 200 * 1024; // 200 KB
             const maxSizeInBytes = 248000; // 200 KB
 
-            console.log(this.file.size)
-
-
             if (!allowedTypes.includes(this.file.type)) {
                 this.imageErrorMessage = 'აირჩიეთ მხოლოდ მითითებული ფორმატები: jpeg, png, jpg';
                 return false;
             } else if (this.file.size > maxSizeInBytes) {
-                // this.imageErrorMessage = "სურათის მაქსიმალური ზომა " + maxSizeInBytes/1024 + " კბ";
+                // this.imageErrorMessage = 'სურათის მაქსიმალური ზომა " + maxSizeInBytes/1024 + " კბ';
                 this.imageErrorMessage = 'სურათის მაქსიმალური ზომა 200 კბ';
 
                 return false;
