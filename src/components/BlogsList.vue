@@ -1,17 +1,18 @@
 <template>
     <section class="blogs container">
-        <div class="blogs_list row row-cols-lg-3 row-cols-md-2 row-cols-1 gy-5">
-            <VLoader v-if="loading" />
 
-            <div v-else>
+        <VLoader v-if="loading"/>
+
+        <div v-else>
+            <div class="blogs_list row row-cols-lg-3 row-cols-md-2 row-cols-1 gy-5">
                 <p v-if="!blogs.length" class="not_found__text mb-0">
                     თქვენ არ გაქვთ დამატებული ბლოგები...
                 </p>
 
                 <BlogItem v-else :blogs="blogs"/>
             </div>
-
         </div>
+
     </section>
 </template>
 
