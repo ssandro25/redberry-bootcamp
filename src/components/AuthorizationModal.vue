@@ -31,41 +31,44 @@
 
                 <div class="modal-body">
                     <div v-if="!authorized">
-                        <p class="modal__title text-center mb-0">
-                            შესვლა
-                        </p>
+                        <form>
+                            <p class="modal__title text-center mb-0">
+                                შესვლა
+                            </p>
 
-                        <div class="d-flex flex-column mt-3">
-                            <label class="label" for="email">
-                                ელ-ფოსტა
-                            </label>
+                            <div class="d-flex flex-column mt-3">
+                                <label class="label" for="email">
+                                    ელ-ფოსტა
+                                </label>
 
-                            <input
-                                v-model="email"
-                                type="email"
-                                class="form-control mt-2"
-                                :class="{
+                                <input
+                                    v-model="email"
+                                    type="email"
+                                    class="form-control mt-2"
+                                    :class="{
                                     'email_not_found__input' : !emailCheckMessage
                                 }"
-                                placeholder="Example@redberry.ge"
-                                id="email"
-                            >
+                                    placeholder="Example@redberry.ge"
+                                    id="email"
+                                >
 
-                            <p class="email_not_found__text mt-2 mb-0">
+                                <p class="email_not_found__text mt-2 mb-0">
                                 <span  v-if="!emailCheckMessage">
                                      <img :src="InfoIcon" alt=""> ელ-ფოსტა არ მოიძებნა
                                 </span>
 
-                            </p>
-                        </div>
+                                </p>
+                            </div>
 
-                        <button
-                            :disabled="!email"
-                            class="btn btn-primary w-100 mt-4"
-                            @click="login()"
-                        >
-                            შესვლა
-                        </button>
+                            <button
+                                :disabled="!email"
+                                class="btn btn-primary w-100 mt-4"
+                                type="submit"
+                                @click.stop.prevent="login()"
+                            >
+                                შესვლა
+                            </button>
+                        </form>
                     </div>
 
                     <div
