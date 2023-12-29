@@ -1,7 +1,11 @@
 <template>
     <section class="blogs container">
         <div class="blogs_list row row-cols-lg-3 row-cols-md-2 row-cols-1 gy-5">
-            <BlogItem :blogs="blogs"/>
+            <p v-if="!blogs.length" class="not_found__text mb-0">
+                თქვენ არ გაქვთ დამატებული ბლოგები...
+            </p>
+
+            <BlogItem v-else :blogs="blogs"/>
         </div>
     </section>
 </template>
@@ -42,5 +46,9 @@ export default {
 
 .gy-5 {
     --bs-gutter-y: 56px;
+}
+.not_found__text {
+    color: #404049;
+    font-size: 18px;
 }
 </style>
