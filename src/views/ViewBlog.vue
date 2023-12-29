@@ -37,11 +37,11 @@
                      {{ currentBlog.title }}
                  </h1>
 
-                 <ul class="blog__categories d-flex align-items-center gap-3 p-0 mt-4 mb-0">
+                 <ul class="blog__categories d-flex flex-wrap align-items-center gap-3 p-0 mt-4 mb-0">
                      <li
                          v-for="category in currentBlog.categories"
                          :key="category.id"
-                         class="blog__categories--item"
+                         class="blog__categories--item text-nowrap"
                          :style="`background-color: ${category.background_color}; color: ${category.text_color}`"
                      >
                          {{ category.title }}

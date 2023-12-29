@@ -1,5 +1,5 @@
 <template>
-    <section class="intro container d-flex align-items-center justify-content-between">
+    <section class="intro container d-none d-lg-flex align-items-center justify-content-between">
         <h1 class="intro__title">ბლოგი</h1>
 
         <img :src="CoverBg" alt="">
