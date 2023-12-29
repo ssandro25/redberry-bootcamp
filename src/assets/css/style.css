@@ -34,6 +34,9 @@ body {
 *::-webkit-scrollbar-thumb:hover {
     background-color: #512BE7 ;
 }
+.text-primary {
+    color: #5D37F3 !important;
+}
 .btn {
     line-height: 20px;
     padding: 10px 20px;
@@ -46,9 +49,7 @@ body {
     background-color: #5D37F3;
     border-color: #5D37F3;
 }
-/*.btn:hover {*/
-/*    opacity: .85;*/
-/*}*/
+
 .btn.btn-primary:hover {
     background-color: #512BE7 !important;
     border-color: #512BE7 !important;

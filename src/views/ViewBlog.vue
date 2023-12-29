@@ -3,6 +3,8 @@
 
         <MainPageButton/>
 
+        <VLoader v-if="loading" />
+
         <div class="blog__page__container_wrap mx-auto">
              <div class="blog">
                  <div class="blog__image">
@@ -63,12 +65,14 @@ import moment from 'moment';
 import Api from "@/requests/Request"
 import SimilarBlogs from "@/components/SimilarBlogs.vue";
 import MainPageButton from "@/components/MainPageButton.vue";
+import VLoader from "@/components/Loader.vue";
 
 const api = new Api()
 export default {
     name: "ViewBlog",
 
     components: {
+        VLoader,
         MainPageButton,
         SimilarBlogs
     },
@@ -77,7 +81,8 @@ export default {
         return {
             currentBlog: [],
             similarBlogs: [],
-            ArrowIcon
+            ArrowIcon,
+            loading: false
         }
     },
 
@@ -100,9 +105,7 @@ export default {
     },
 
     mounted() {
-        // api.viewBlog(this.$route.params.id).then(response => {
-        //     this.currentBlog = response.data
-        // })
+        this.loading = true;
 
         this.viewBlog(this.$route.params.id)
 
@@ -117,6 +120,8 @@ export default {
                     })
                 );
             });
+
+            this.loading = false;
         });
     }
 }
