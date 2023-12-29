@@ -28,10 +28,6 @@ export default {
 
     &:hover {
         background-color: #D9D8E0;
-
-        //& svg path{
-        //    fill: #fe3b1f !important;
-        //}
     }
 }
 </style>

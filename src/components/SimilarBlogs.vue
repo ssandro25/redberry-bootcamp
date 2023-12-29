@@ -111,9 +111,6 @@ export default {
         filteredBlogs() {
             const today = moment();
 
-            console.log(today._d)
-
-
             return this.similarBlogs.filter(blog => {
                 const showBlogDate = moment(blog.publish_date);
 

@@ -133,7 +133,6 @@ export default {
         },
 
         refreshRoute() {
-            // location.reload()
             location.href = "/"
         }
     },

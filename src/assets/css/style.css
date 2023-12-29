@@ -11,8 +11,23 @@ body {
 /* ===== Scrollbar CSS ===== */
 /* Firefox */
 * {
-    scrollbar-width: auto;
+    scrollbar-width: thin;
     scrollbar-color: #5d37f3 #ffffff;
+}
+
+*::-webkit-scrollbar {
+    width: 16px;
+    height: 14px;
+    display: none;
+}
+
+*::-webkit-scrollbar-track {
+    background: #ffffff;
+    display: none;
+}
+
+*::-webkit-scrollbar-thumb {
+    display: none;
 }
 
 /* Chrome, Edge, and Safari */

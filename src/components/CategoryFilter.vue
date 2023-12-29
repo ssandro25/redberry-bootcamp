@@ -7,14 +7,6 @@
                 class="categories_list__item text-nowrap"
                 :title="category.title"
             >
-<!--                <router-link-->
-<!--                    :to="'/' + replaceSpaces(category.title)"-->
-<!--                    class="categories_list__item-link text-decoration-none"-->
-<!--                    :style="`color: ${category.text_color}`"-->
-<!--                >-->
-<!--                    {{ category.title }}-->
-<!--                </router-link>-->
-
                 <button
                     type="button"
                     class="btn border-0 categories_list__item-btn text-decoration-none"

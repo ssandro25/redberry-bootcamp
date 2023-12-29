@@ -391,7 +391,6 @@ export default {
 
             const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
             // const maxSizeInBytes = 5242880; // 5MB
-            // const maxSizeInBytes = 200 * 1024; // 200 KB
             const maxSizeInBytes = 248000; // 200 KB
 
             if (!allowedTypes.includes(this.file.type)) {
