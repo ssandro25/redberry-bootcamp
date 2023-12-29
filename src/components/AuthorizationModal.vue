@@ -12,16 +12,17 @@
                     <button
                         v-if="!authorized"
                         type="button"
-                        class="btn p-0 border-0"
+                        class="close__btn"
                         data-bs-dismiss="modal"
-                        aria-label="Close">
+                        aria-label="Close"
+                    >
                         <img :src="CloseIcon" alt="">
                     </button>
 
                     <button
                         v-else
                         type="button"
-                        class="btn p-0 border-0"
+                        class="close__btn"
                         @click="refreshRoute()"
                     >
                         <img :src="CloseIcon" alt="">
@@ -69,8 +70,11 @@
 
                     <div
                         v-else
-                        class="text-center">
-                        <img :src="SuccessCheckIcon" alt="">
+                        class="text-center"
+                    >
+                        <div class="success__icon">
+                            <img :src="SuccessCheckIcon" alt="">
+                        </div>
 
                         <p class="success_login__text mt-3 mb-0">
                             წარმატებული ავტორიზაცია
@@ -185,5 +189,27 @@ export default {
 }
 .modal-content {
     border-radius: 12px !important;
+}
+.close__btn {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    border: 0;
+
+    img {
+        padding: 8px;
+        border-radius: 50%;
+        transition: .3s;
+    }
+
+    &:hover img {
+        background-color: #F5F4F9;
+    }
+}
+.success__icon {
+    height: 64px;
 }
 </style>

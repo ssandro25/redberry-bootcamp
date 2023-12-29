@@ -27,11 +27,11 @@ export default {
     transition: .3s;
 
     &:hover {
-        background-color: #D8D7DF;
+        background-color: #D9D8E0;
 
-        & svg path{
-            fill: #fe3b1f !important;
-        }
+        //& svg path{
+        //    fill: #fe3b1f !important;
+        //}
     }
 }
 </style>

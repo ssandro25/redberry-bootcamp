@@ -167,7 +167,7 @@ export default {
         color: #5D37F3;
 
         &:hover {
-            opacity: .8;
+            color: #512BE7;
             text-decoration: underline !important;
         }
     }

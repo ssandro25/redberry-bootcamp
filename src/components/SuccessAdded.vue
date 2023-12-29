@@ -1,13 +1,15 @@
 <template>
     <div class="success__added position-absolute top-50 start-50 translate-middle bg-white text-center">
         <div class="close__modal">
-            <router-link to="/" class="d-block">
+            <router-link to="/" class="close__btn">
                 <img :src="CloseIcon" alt="">
             </router-link>
 
         </div>
-        
-        <img :src="SuccessCheckIcon" alt="">
+
+        <div class="success__added_icon">
+            <img :src="SuccessCheckIcon" alt="">
+        </div>
 
         <p class="success__added__message mt-3 mb-0">
             ჩანაწი წარმატებით დაემატა
@@ -56,7 +58,7 @@ export default {
             this.getAddedSuccess = true;
             setTimeout(()=> {
                 location.href = "/"
-            }, 500)
+            }, 1000)
         }
     },
 }
@@ -70,6 +72,10 @@ export default {
     border-radius: 12px;
     padding: 64px 24px 40px;
 
+    &_icon {
+        height: 64px;
+    }
+
     &__message {
         color: #1A1A1F;
         font-size: 20px;
@@ -81,6 +87,24 @@ export default {
         position: absolute;
         top: 20px;
         right: 20px;
+    }
+
+    .close__btn {
+        width: 24px;
+        height: 24px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        img {
+            padding: 8px;
+            border-radius: 50%;
+            transition: .3s;
+        }
+
+        &:hover img {
+            background-color: #F5F4F9;
+        }
     }
 }
 .message__backdrop {

@@ -6,7 +6,7 @@
 
             <MainPageButton />
 
-            <div class="container__wrap mx-auto">
+            <div class="container__wrap">
                 <h1 class="add_blog__title">
                     ბლოგის დამატება
                 </h1>
@@ -43,7 +43,7 @@
                                         type="file"
                                     >
 
-                                    <p class="add_file__error_message mb-0">
+                                    <p class="add_file__error_message mt-2 mb-0">
                                         {{ imageErrorMessage }}
                                     </p>
                                 </div>
@@ -583,6 +583,11 @@ export default {
     background-color: #F4F3FF;
     border: 1px dashed #85858D;
     border-radius: 12px;
+    transition: .3s;
+
+    &:hover {
+        background-color: #F1EFFB;
+    }
 
     &--label {
         font-weight: 400;
@@ -646,6 +651,9 @@ input::placeholder {
     font-weight: 400;
     line-height: 20px;
     min-height: 46px;
+    &:hover {
+        background-color: #F9F9FA;
+    }
 }
 .multiselect.is-active {
     border-color: #5D37F3;
@@ -719,6 +727,8 @@ input::placeholder {
 @media (min-width: 1400px) {
     .container__wrap {
         max-width: 600px;
+        margin-left: 280px !important;
+        //margin-inline: auto;
     }
 }
 </style>
